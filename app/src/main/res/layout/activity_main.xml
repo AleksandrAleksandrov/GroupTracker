@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TabHost android:id="@android:id/tabhost"
+        style="@style/DoubleMatchParent">
+
+        <LinearLayout style="@style/DoubleMatchParent"
+            android:orientation="vertical" >
+
+            <TabWidget android:id="@android:id/tabs"
+                style="@style/WidthMatchParent_HeightWrapContent" />
+
+            <FrameLayout android:id="@android:id/tabcontent"
+                style="@style/DoubleMatchParent" />
+
+        </LinearLayout>
+
+    </TabHost>-->
+
+</LinearLayout>

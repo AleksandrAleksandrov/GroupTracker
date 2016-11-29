@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/nav_share_switch_item"
+        android:icon="@drawable/ic_person_pin_black_24dp"
+        android:title="@string/shareLocation"
+        app:actionLayout="@layout/widget_switch"/>
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_hybrid"
+            android:checked="true"
+            android:icon="@drawable/ic_satellite_black_24dp"
+            android:title="@string/map_type_hybrid"/>
+        <item
+            android:id="@+id/nav_satellite"
+            android:icon="@drawable/ic_satellite_black_24dp"
+            android:title="@string/map_type_satellite"/>
+        <item
+            android:id="@+id/nav_terrian"
+            android:icon="@drawable/ic_terrian_black_24dp"
+            android:title="@string/map_type_terrian"/>
+        <item
+            android:id="@+id/nav_normal"
+            android:icon="@drawable/ic_normal_black_24dp"
+            android:title="@string/map_type_normal"/>
+    </group>
+
+    <item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/nav_friends"
+                android:icon="@drawable/ic_menu_share"
+                android:title="@string/friends"/>
+            <item
+                android:id="@+id/nav_messages"
+                android:icon="@drawable/ic_menu_send"
+                android:title="@string/messages"/>
+        </menu>
+    </item>
+
+</menu>

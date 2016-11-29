@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:padding="10dp">
+
+    <ImageView
+        android:id="@+id/profile_image"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="20dp"
+        android:src="@drawable/profile"/>
+
+    <TextView
+        android:textSize="26sp"
+        android:text="User's name"
+        android:id="@+id/profile_name"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:layout_marginRight="5dp"
+            style="@style/button_style"
+            android:text="@string/send_a_message"
+            android:onClick="onClickSendAMessageFromProfile"/>
+
+        <Button
+            android:layout_marginLeft="5dp"
+            style="@style/button_style"
+            android:text="@string/add_to_friends"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -1,0 +1,41 @@
+<resources>
+    <string name="title_activity_maps">Мапа</string>
+    <!--<string name="title_activity_main">Share Location</string>-->
+
+    <string name="shareLocation">Поділитися місцем розташування</string>
+    <string name="provider_gps">GPS</string>
+    <string name="provider_network">Network</string>
+    <string name="location_settings">Налаштування геолокації</string>
+
+
+    <string name="nick_name">Ім\'я користувача</string>
+    <string name="password">Пароль</string>
+    <string name="login_button">Увійти</string>
+    <string name="hint_nick_name">Ім\'я користувача</string>
+    <string name="hint_password">Пароль</string>
+
+    <string name="speed">Швидкість</string>
+    <string name="km_per_hour">км/г</string>
+    <string name="main_tab">Головний</string>
+    <string name="map_tab">Мапа</string>
+    <string name="text_tab3">This is the third tab</string>
+    <string name="action_settings">Налаштування</string>
+
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="map_type_hybrid">Гібрид</string>
+    <string name="map_type_normal">Схема</string>
+    <string name="map_type_satellite">Супутник</string>
+    <string name="map_type_terrian">Рельєф</string>
+    <string name="friends">Друзі</string>
+    <string name="messages">Повідомлення</string>
+    <string name="search_hint">Пошук</string>
+    <string name="send_a_message">Написати повідомлення</string>
+    <string name="add_to_friends">Додати в друзі</string>
+    <string name="create_a_new_account">Створити новий акаунту</string>
+    <string name="hint_email">Email</string>
+    <string name="sing_up">Зареєструватися</string>
+    <string name="edit">Редагувати</string>
+    <string name="done">Зроблено</string>
+</resources>

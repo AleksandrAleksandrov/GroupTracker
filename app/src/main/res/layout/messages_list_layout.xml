@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:id="@+id/messagesListLinearLayout"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <fragment
+            android:id="@+id/fragment_message"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:name="location.share.com.aleksandr.aleksandrov.sharelocation.classes.MessagesList"/>
+
+    </RelativeLayout>
+
+</FrameLayout>

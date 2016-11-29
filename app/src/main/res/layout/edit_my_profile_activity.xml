@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+
+        <ImageView
+            android:id="@+id/my_profile_image_edit"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="left"
+            android:layout_margin="20dp"
+            android:src="@drawable/profile"/>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/text_input_my_profile_fio_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_margin="10dp">
+
+            <EditText
+                android:id="@+id/my_profile_fio_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Users name"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/text_input_my_profile_login_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_margin="10dp">
+
+            <EditText
+                android:id="@+id/my_profile_login_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="User's Login"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/text_input_my_profile_phone_number_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_margin="10dp">
+
+            <EditText
+                android:id="@+id/my_profile_phone_number_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="User's phone number"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/text_input_my_profile_email_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_margin="10dp">
+
+            <EditText
+                android:id="@+id/my_profile_email_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="User's email"/>
+        </android.support.design.widget.TextInputLayout>
+
+    </LinearLayout>
+</ScrollView>

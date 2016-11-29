@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="80dp">
+
+    <ImageView
+        android:layout_gravity="center_vertical"
+        android:layout_margin="15dp"
+        android:id="@+id/picture_in_messages_list"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/profile"/>
+
+    <TextView
+        android:layout_gravity="top"
+        android:text="user's name"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="80dp"
+        android:id="@+id/the_last_message_in_messages_list"
+        android:textSize="20sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:layout_gravity="bottom"
+        android:text="message"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="80dp"
+        android:id="@+id/name_of_person_in_messages_list"
+        android:textSize="20sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <ImageView
+        android:layout_gravity="bottom|right"
+        android:layout_margin="10dp"
+        android:id="@+id/send_picture_in_messages_list"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:src="@drawable/ic_menu_send"/>
+
+    <TextView
+        android:layout_gravity="top|right"
+        android:text="date"
+        android:layout_margin="7dp"
+        android:id="@+id/the_last_message_date_in_messages_list"
+        android:textSize="18sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+</FrameLayout>

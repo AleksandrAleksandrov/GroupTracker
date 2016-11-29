@@ -1,0 +1,43 @@
+<resources>
+    <string name="title_activity_maps">Карта</string>
+    <!--<string name="title_activity_main">Share Location</string>-->
+
+    <string name="shareLocation">Делиться местоположением</string>
+    <string name="provider_gps">GPS</string>
+    <string name="provider_network">Network</string>
+    <string name="location_settings">Настройки геолокации</string>
+
+
+    <string name="nick_name">Имя пользователя</string>
+    <string name="password">Пароль</string>
+    <string name="login_button">Войти</string>
+    <string name="hint_nick_name">Имя Пользователя</string>
+    <string name="hint_password">Пароль</string>
+
+    <string name="speed">Скорость</string>
+    <string name="km_per_hour">км/ч</string>
+    <string name="main_tab">Главный</string>
+    <string name="map_tab">Карта</string>
+    <string name="text_tab3">This is the third tab</string>
+    <string name="action_settings">Настройки</string>
+
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="map_type_hybrid">Гибрид</string>
+    <string name="map_type_normal">Схема</string>
+    <string name="map_type_satellite">Спутник</string>
+    <string name="map_type_terrian">Рельеф</string>
+    <string name="friends">Друзья</string>
+    <string name="messages">Сообщения</string>
+    <string name="search_hint">Поиск</string>
+    <string name="send_a_message">Написать сообщение</string>
+    <string name="add_to_friends">Добавить в друзья</string>
+    <string name="create_a_new_account">Создать новый аккаунт</string>
+    <string name="hint_email">Email</string>
+    <string name="sing_up_button"></string>
+    <string name="sing_up">Зарегистрироваться</string>
+    <string name="edit">Редактировать</string>
+    <string name="done">Готово</string>
+
+</resources>
