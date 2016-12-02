@@ -83,7 +83,14 @@ public class AuthorizationActivity extends AppCompatActivity {
     }
 
     public void onClickCreateNewAccount(View view) {
-        startActivity(new Intent(this.getBaseContext(), CreateNewAccountActivity.class));
+        startActivityForResult(new Intent(this.getBaseContext(), CreateNewAccountActivity.class), RESULT_OK);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == RESULT_OK) {
+            finish();
+        }
     }
 
     class MyLoginAsyncTask extends AsyncTask<String, Void, Boolean> {
@@ -136,41 +143,43 @@ public class AuthorizationActivity extends AppCompatActivity {
 //                        editor.putString(Res.SHARED_PREFERENCES_PASSWORD, params[1]);
                         editor.putString(Res.SHARED_PREFERENCES_E_TOKEN, text);
                         editor.commit();
-                        try {
-                            String param = Res.TOKEN + "=" + sharedPreferences.getString(Res.SHARED_PREFERENCES_E_TOKEN, "") + "&" + Res.USER_NAME + "=" + sharedPreferences.getString(Res.SHARED_PREFERENCES_NICK_NAME, "");
-                            URI uri = new URI("http", Res.GET_MY_INFO + param, null);
-                            URL url2 = uri.toURL();
-
-                            HttpURLConnection urlConnection = (HttpURLConnection) url2.openConnection();
-
-                            if (urlConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                                String line2 = null;
-                                InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-                                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(in));
-                                StringBuilder result = new StringBuilder();
-                                while ((line2 = bufferedReader.readLine()) != null) {
-                                    result.append(line2);
-                                }
-                                JSONObject obj = new JSONObject(result.toString());
-
-                                    // Проверка для отсеивания своих данных
-
-                                editor.putInt(Res.SHARED_PREFERENCES_ID, obj.getInt(Res.ID));
-                                editor.putString(Res.SHARED_PREFERENCES_EMAIL, obj.getString(Res.EMAIL));
-                                editor.putString(Res.SHARED_PREFERENCES_FIO, obj.getString(Res.FIO));
-                                editor.commit();
-//                                        UsersLocation usersLocation = new UsersLocation(obj.getInt(Res.ID), obj.getDouble(Res.LATITUDE), obj.getDouble(Res.LONGITUDE), obj.getDouble(Res.SPEED));
-//                                        Log.d("myMap", "" + obj.getInt(Res.ID)+ obj.getDouble(Res.LATITUDE) + obj.getDouble(Res.LONGITUDE)+ obj.getDouble(Res.SPEED));
-
-
-                            }
-
-
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        } catch (URISyntaxException e) {
-                            e.printStackTrace();
-                        }
+                        Communication communication = new Communication(getBaseContext());
+                        communication.getMyInfo();
+//                        try {
+//                            String param = Res.TOKEN + "=" + sharedPreferences.getString(Res.SHARED_PREFERENCES_E_TOKEN, "") + "&" + Res.USER_NAME + "=" + sharedPreferences.getString(Res.SHARED_PREFERENCES_NICK_NAME, "");
+//                            URI uri = new URI("http", Res.GET_MY_INFO + param, null);
+//                            URL url2 = uri.toURL();
+//
+//                            HttpURLConnection urlConnection = (HttpURLConnection) url2.openConnection();
+//
+//                            if (urlConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+//                                String line2 = null;
+//                                InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+//                                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(in));
+//                                StringBuilder result = new StringBuilder();
+//                                while ((line2 = bufferedReader.readLine()) != null) {
+//                                    result.append(line2);
+//                                }
+//                                JSONObject obj = new JSONObject(result.toString());
+//
+//                                    // Проверка для отсеивания своих данных
+//
+//                                editor.putInt(Res.SHARED_PREFERENCES_ID, obj.getInt(Res.ID));
+//                                editor.putString(Res.SHARED_PREFERENCES_EMAIL, obj.getString(Res.EMAIL));
+//                                editor.putString(Res.SHARED_PREFERENCES_FIO, obj.getString(Res.FIO));
+//                                editor.commit();
+////                                        UsersLocation usersLocation = new UsersLocation(obj.getInt(Res.ID), obj.getDouble(Res.LATITUDE), obj.getDouble(Res.LONGITUDE), obj.getDouble(Res.SPEED));
+////                                        Log.d("myMap", "" + obj.getInt(Res.ID)+ obj.getDouble(Res.LATITUDE) + obj.getDouble(Res.LONGITUDE)+ obj.getDouble(Res.SPEED));
+//
+//
+//                            }
+//
+//
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        } catch (URISyntaxException e) {
+//                            e.printStackTrace();
+//                        }
 
 //                        return line;
 

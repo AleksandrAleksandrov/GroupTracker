@@ -10,6 +10,7 @@ public class Res {
     public static final String GET_OBJECT_INFO = "//grouptracker.pp.ua/api/getobjinfo?";
     // get my information.
     public static final String GET_MY_INFO = "//grouptracker.pp.ua/api/getmyinfo?";
+    public static final String SING_UP = "//grouptracker.pp.ua/api/singup?";
 
     public static final String LOGIN = "//grouptracker.pp.ua/api/login";
     public static final String ID = "id";
@@ -21,6 +22,8 @@ public class Res {
     public static final String SPEED = "sp";
     public static final String TOKEN = "token";
     public static final String USER_NAME = "un";
+    public static final String PASSWORD = "password";
+    public static final String CONFIRM_PASSWORD = "confirmPassword";
     // Aleksandrov 6
     // Sliachtitskiy 2
     // Luba 15
