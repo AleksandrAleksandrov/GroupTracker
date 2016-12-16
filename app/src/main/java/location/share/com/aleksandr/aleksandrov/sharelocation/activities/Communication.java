@@ -2,6 +2,7 @@ package location.share.com.aleksandr.aleksandrov.sharelocation.activities;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -17,34 +18,37 @@ import java.net.URISyntaxException;
 import java.net.URL;
 
 import location.share.com.aleksandr.aleksandrov.sharelocation.Res;
+import location.share.com.aleksandr.aleksandrov.sharelocation.classes.MyProfileInfo;
 
 /**
  * Created by Aleksandr on 12/2/2016.
  */
 
-public class Communication implements Runnable {
+public class Communication  {
     SharedPreferences sharedPreferences;
 
     public Communication(Context context) {
         sharedPreferences = context.getSharedPreferences(Res.PREFERENCE_KEY, Context.MODE_PRIVATE);
     }
 
-    public void getMyInfo() {
-        SharedPreferences.Editor editor = sharedPreferences.edit();
+    public MyProfileInfo getMyInfo() {
+        Editor editor = sharedPreferences.edit();
+        MyProfileInfo myProfileInfo = null;
         try {
-            String param = Res.TOKEN + "=" + sharedPreferences.getString(Res.SHARED_PREFERENCES_E_TOKEN, "") + "&" + Res.USER_NAME + "=" + sharedPreferences.getString(Res.SHARED_PREFERENCES_NICK_NAME, "");
-            URI uri = new URI("http", Res.GET_MY_INFO + param, null);
-            URL url2 = uri.toURL();
+            URL url = new URL(Res.PROTOCOL_SCHEME+ ":"
+                    + Res.GET_MY_INFO
+                    + Res.TOKEN + "=" + sharedPreferences.getString(Res.SHARED_PREFERENCES_E_TOKEN, "") + "&"
+                    + Res.USER_NAME + "=" + sharedPreferences.getString(Res.SHARED_PREFERENCES_NICK_NAME, ""));
 
-            HttpURLConnection urlConnection = (HttpURLConnection) url2.openConnection();
+            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 
             if (urlConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                String line2 = null;
+                String line;
                 InputStream in = new BufferedInputStream(urlConnection.getInputStream());
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(in));
-                StringBuilder result = new StringBuilder();
-                while ((line2 = bufferedReader.readLine()) != null) {
-                    result.append(line2);
+                StringBuffer result = new StringBuffer();
+                while ((line = bufferedReader.readLine()) != null) {
+                    result.append(line);
                 }
                 JSONObject obj = new JSONObject(result.toString());
 
@@ -53,19 +57,54 @@ public class Communication implements Runnable {
                 editor.putInt(Res.SHARED_PREFERENCES_ID, obj.getInt(Res.ID));
                 editor.putString(Res.SHARED_PREFERENCES_EMAIL, obj.getString(Res.EMAIL));
                 editor.putString(Res.SHARED_PREFERENCES_FIO, obj.getString(Res.FIO));
+                editor.putString(Res.SHARED_PREFERENCES_PHONE_NUMBER, obj.getString(Res.PHONE));
                 editor.commit();
+
+                myProfileInfo = new MyProfileInfo(obj.getInt(Res.ID), obj.getString(Res.FIO), obj.getString(Res.EMAIL), obj.getString(Res.PHONE));
             }
         } catch (IOException e) {
-            e.printStackTrace();
-        } catch (URISyntaxException e) {
             e.printStackTrace();
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        return myProfileInfo;
     }
 
-    @Override
-    public void run() {
+    public MyProfileInfo setMyInfo(String fio, String email, String phoneNumber) {
+        Editor editor = sharedPreferences.edit();
+        MyProfileInfo myProfileInfo = new MyProfileInfo();
+        try {
+            URL url = new URL(Res.PROTOCOL_SCHEME + ":"
+                    + Res.SET_MY_INFO
+                    + Res.TOKEN + "=" + sharedPreferences.getString(Res.SHARED_PREFERENCES_E_TOKEN, "") + "&"
+                    + Res.FIO + "=" + fio + "&"
+                    + Res.EMAIL + "=" + email + "&"
+                    + Res.PHONE + "=" + phoneNumber);
 
+            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+
+            if (urlConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                String line;
+                InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(in));
+                StringBuffer result = new StringBuffer();
+                while ((line = bufferedReader.readLine()) != null) {
+                    result.append(line);
+                }
+                if (result.toString().equals("0")) {
+                    editor.putString(Res.SHARED_PREFERENCES_FIO, fio);
+                    editor.putString(Res.SHARED_PREFERENCES_EMAIL, email);
+                    editor.putString(Res.SHARED_PREFERENCES_PHONE_NUMBER, phoneNumber);
+                    editor.commit();
+
+                    myProfileInfo.setFio(fio);
+                    myProfileInfo.setEmail(email);
+                    myProfileInfo.setPhone(phoneNumber);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return myProfileInfo;
     }
 }

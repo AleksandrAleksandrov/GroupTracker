@@ -5,11 +5,13 @@ package location.share.com.aleksandr.aleksandrov.sharelocation;
  */
 
 public class Res {
+    public static final String PROTOCOL_SCHEME = "http";
     public static final String URL = "//grouptracker.pp.ua/api/gd?";
     public static final String GET_OBJECTS = "//grouptracker.pp.ua/api/getobj?";
     public static final String GET_OBJECT_INFO = "//grouptracker.pp.ua/api/getobjinfo?";
     // get my information.
     public static final String GET_MY_INFO = "//grouptracker.pp.ua/api/getmyinfo?";
+    public static final String SET_MY_INFO = "//grouptracker.pp.ua/api/setmyinfo?";
     public static final String SING_UP = "//grouptracker.pp.ua/api/singup?";
 
     public static final String LOGIN = "//grouptracker.pp.ua/api/login";
@@ -23,6 +25,8 @@ public class Res {
     public static final String TOKEN = "token";
     public static final String USER_NAME = "un";
     public static final String PASSWORD = "password";
+    public static final String PHONE_NUMBER = "phone_number";
+    public static final String PHONE = "phone";
     public static final String CONFIRM_PASSWORD = "confirmPassword";
     // Aleksandrov 6
     // Sliachtitskiy 2
@@ -39,7 +43,8 @@ public class Res {
     public static final String SHARED_PREFERENCES_FIRST_NAME = "FirstName";
     public static final String SHARED_PREFERENCES_LAST_NAME = "LastName";
     public static final String SHARED_PREFERENCES_E_TOKEN = "eToken";
-
+    public static final String SHARED_PREFERENCES_PHONE_NUMBER = "phone_number";
+    // token jRZ0RKZ2SdRLwWf63fArRHyiH9oHhDIR
 
     public static final String ARRAY_LIST_USERS = "alUsers";
 }

@@ -11,11 +11,12 @@ import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,6 +25,16 @@ import java.util.Date;
 
 import location.share.com.aleksandr.aleksandrov.sharelocation.R;
 import location.share.com.aleksandr.aleksandrov.sharelocation.Res;
+import location.share.com.aleksandr.aleksandrov.sharelocation.classes.MyProfileInfo;
+import rx.Observable;
+import rx.Observer;
+import rx.Subscriber;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
+
+import static android.R.attr.bitmap;
 
 /**
  * Created by Aleksandr on 11/23/2016.
@@ -34,9 +45,12 @@ public class EditMyProfileActivity extends AppCompatActivity {
     static final int REQUEST_IMAGE_CAPTURE = 1;
     static final int REQUEST_TAKE_PHOTO = 2;
     ImageView imageView;
-    EditText user_fio, user_login, user_phone, user_email;
+    EditText user_fio, user_phone, user_email;
     String mCurrentPhotoPath;
     SharedPreferences sharedPreferences;
+
+
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,7 +58,6 @@ public class EditMyProfileActivity extends AppCompatActivity {
         setContentView(R.layout.edit_my_profile_activity);
 
         user_fio = (EditText) findViewById(R.id.my_profile_fio_edit);
-        user_login = (EditText) findViewById(R.id.my_profile_login_edit);
         user_phone = (EditText) findViewById(R.id.my_profile_phone_number_edit);
         user_email = (EditText) findViewById(R.id.my_profile_email_edit);
 
@@ -52,13 +65,38 @@ public class EditMyProfileActivity extends AppCompatActivity {
         user_fio.setText(sharedPreferences.getString(Res.SHARED_PREFERENCES_FIO, ""));
 
         imageView = (ImageView) findViewById(R.id.my_profile_image_edit);
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dispatchTakePictureIntent();
-            }
-        });
+
+
+//        Observable.create(new Observable.OnSubscribe<String>() {
+//            @Override
+//            public void call(final Subscriber<? super String> subscriber) {
+//                Communication communication = new Communication(getBaseContext());
+//                String data = communication.getMyInfo();
+//                subscriber.onNext(data.toString()); // Emit the contents of the URL
+//                subscriber.onCompleted(); // Nothing more to emit
+//            }
+//        })
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new Action1<String>() {
+//                    @Override
+//                    public void call(final String s) {
+//                        user_fio.setText(s.toString());
+//                    }
+//                });
+
+
+//        imageView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                dispatchTakePictureIntent();
+//            }
+//        });
+
+
     }
+
+
 
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -73,9 +111,7 @@ public class EditMyProfileActivity extends AppCompatActivity {
             }
             // Continue only if the File was successfully created
             if (photoFile != null) {
-                Uri photoURI = FileProvider.getUriForFile(this,
-                        "location.share.com.aleksandr.aleksandrov.sharelocation",
-                        photoFile);
+                Uri photoURI = FileProvider.getUriForFile(this, "location.share.com.aleksandr.aleksandrov.sharelocation", photoFile);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                 startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
             }
@@ -140,9 +176,54 @@ public class EditMyProfileActivity extends AppCompatActivity {
         Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
         imageView.setImageBitmap(bitmap);
     }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.done) {
+            Observable.create(new Observable.OnSubscribe<MyProfileInfo>() {
+                @Override
+                public void call(final Subscriber<? super MyProfileInfo> subscriber) {
+                    Communication communication = new Communication(getBaseContext());
+                    MyProfileInfo data = communication.setMyInfo(user_fio.getText().toString(), user_email.getText().toString(), user_phone.getText().toString());
+                    subscriber.onNext(data); // Emit the contents of the URL
+                    subscriber.onCompleted(); // Nothing more to emit
+                }
+            })
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Action1<MyProfileInfo>() {
+                        @Override
+                        public void call(final MyProfileInfo myProfileInfo) {
+                            finishWithResult(myProfileInfo);
+                        }
+                    });
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.done_menu, menu);
         return true;
+    }
+    private void finishWithResult(MyProfileInfo myProfileInfo) {
+        Bundle conData = new Bundle();
+        conData.putInt("Thanks Thanks", RESULT_OK);
+        Intent intent = new Intent();
+        intent.putExtras(conData);
+        intent.putExtra(Res.FIO, myProfileInfo.getFio());
+        intent.putExtra(Res.PHONE, myProfileInfo.getPhone());
+        intent.putExtra(Res.EMAIL, myProfileInfo.getEmail());
+        setResult(RESULT_OK, intent);
+        finish();
     }
 }

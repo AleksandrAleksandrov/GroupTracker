@@ -36,6 +36,7 @@ public class MyProfileActivity extends AppCompatActivity {
         user_email.setText(sharedPreferences.getString(Res.SHARED_PREFERENCES_EMAIL, ""));
         user_fio.setText(sharedPreferences.getString(Res.SHARED_PREFERENCES_FIO, ""));
         user_login.setText(sharedPreferences.getString(Res.SHARED_PREFERENCES_NICK_NAME, ""));
+        user_phone.setText(sharedPreferences.getString(Res.SHARED_PREFERENCES_PHONE_NUMBER, ""));
     }
 
     @Override
@@ -47,9 +48,25 @@ public class MyProfileActivity extends AppCompatActivity {
         return true;
     }
 
+    /* Called when the second activity's finished */
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch(requestCode) {
+            case 90:
+                if (resultCode == RESULT_OK) {
+                    Bundle res = data.getExtras();
+                    user_fio.setText(res.getString(Res.FIO, ""));
+                    user_phone.setText(res.getString(Res.PHONE, ""));
+                    user_email.setText(res.getString(Res.EMAIL, ""));
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         if (menuItem.getItemId() == R.id.my_profile_menu_item_edit) {
-            startActivity(new Intent(getBaseContext(), EditMyProfileActivity.class));
+            startActivityForResult(new Intent(getBaseContext(), EditMyProfileActivity.class), 90);
         }
         return super.onOptionsItemSelected(menuItem);
     }
