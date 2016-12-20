@@ -19,7 +19,7 @@ import location.share.com.aleksandr.aleksandrov.sharelocation.classes.CommonMeth
  * Created by Aleksandr on 11/9/2016.
  */
 
-public class ChatsActivity extends AppCompatActivity {
+public class ChatsActivity extends BaseActivity {
 
     private EditText msg_edittext;
     private String user1 = "khushi", user2 = "khushi1";
@@ -43,7 +43,7 @@ public class ChatsActivity extends AppCompatActivity {
         msgListView.setTranscriptMode(ListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
         msgListView.setStackFromBottom(true);
 
-        chatlist = new ArrayList<ChatMessage>();
+        chatlist = new ArrayList<>();
         chatAdapter = new ChatAdapter(this, chatlist);
         msgListView.setAdapter(chatAdapter);
     }

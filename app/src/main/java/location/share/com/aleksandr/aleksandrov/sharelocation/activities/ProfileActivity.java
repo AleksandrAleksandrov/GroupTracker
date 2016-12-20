@@ -16,7 +16,7 @@ import location.share.com.aleksandr.aleksandrov.sharelocation.R;
  * Created by Aleksandr on 11/7/2016.
  */
 
-public class ProfileActivity extends AppCompatActivity {
+public class ProfileActivity extends BaseActivity {
 
     TextView textView;
 

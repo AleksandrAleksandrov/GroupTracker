@@ -40,7 +40,7 @@ import static android.R.attr.bitmap;
  * Created by Aleksandr on 11/23/2016.
  */
 
-public class EditMyProfileActivity extends AppCompatActivity {
+public class EditMyProfileActivity extends BaseActivity {
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
     static final int REQUEST_TAKE_PHOTO = 2;

@@ -10,7 +10,7 @@ import location.share.com.aleksandr.aleksandrov.sharelocation.R;
  * Created by Aleksandr on 11/9/2016.
  */
 
-public class MessagesListActivity extends AppCompatActivity {
+public class MessagesListActivity extends BaseActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

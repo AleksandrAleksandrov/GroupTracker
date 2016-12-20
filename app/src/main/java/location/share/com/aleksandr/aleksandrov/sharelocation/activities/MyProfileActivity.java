@@ -16,7 +16,7 @@ import location.share.com.aleksandr.aleksandrov.sharelocation.Res;
 /**
  * Created by Aleksandr on 11/22/2016.
  */
-public class MyProfileActivity extends AppCompatActivity {
+public class MyProfileActivity extends BaseActivity {
 
     public TextView user_login, user_fio, user_email, user_phone;
 

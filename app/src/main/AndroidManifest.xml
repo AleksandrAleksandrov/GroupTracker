@@ -99,6 +99,7 @@
 
         <activity android:name=".activities.EditMyProfileActivity"/>
 
+        <activity android:name=".activities.BaseActivity"/>
         <!--
             Services
         -->

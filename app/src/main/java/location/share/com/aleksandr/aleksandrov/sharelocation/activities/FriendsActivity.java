@@ -20,30 +20,11 @@ import location.share.com.aleksandr.aleksandrov.sharelocation.classes.UserInfo;
  * Created by Aleksandr on 11/7/2016.
  */
 
-public class FriendsActivity extends AppCompatActivity {
+public class FriendsActivity extends BaseActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.friends_list);
-    }
-
-
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.main, menu);
-
-        MenuItem searchItem = menu.findItem(R.id.action_search);
-
-        SearchManager searchManager = (SearchManager) this.getSystemService(Context.SEARCH_SERVICE);
-
-        SearchView searchView = null;
-        if (searchItem != null) {
-            searchView = (SearchView) searchItem.getActionView();
-        }
-        if (searchView != null) {
-            searchView.setSearchableInfo(searchManager.getSearchableInfo(this.getComponentName()));
-        }
-        return super.onCreateOptionsMenu(menu);
     }
 }
