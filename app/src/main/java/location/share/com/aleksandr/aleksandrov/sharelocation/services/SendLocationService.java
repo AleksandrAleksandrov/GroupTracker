@@ -36,7 +36,7 @@ import location.share.com.aleksandr.aleksandrov.sharelocation.classes.InfoLocati
 
 public class SendLocationService extends Service {
 
-    private static final String SERVICE_TAG = "SendLocationService";
+    public static final String SERVICE_TAG = "SendLocationService";
 
     private LocationManager locationManager;
     private SharedPreferences sharedPreferences;

@@ -26,6 +26,7 @@ import com.google.android.gms.maps.GoogleMap;
 import location.share.com.aleksandr.aleksandrov.sharelocation.R;
 import location.share.com.aleksandr.aleksandrov.sharelocation.Res;
 import location.share.com.aleksandr.aleksandrov.sharelocation.services.SendLocationService;
+import location.share.com.aleksandr.aleksandrov.sharelocation.services.Service;
 
 /**
  * Created by Aleksandr on 12/20/2016.
@@ -33,17 +34,21 @@ import location.share.com.aleksandr.aleksandrov.sharelocation.services.SendLocat
 
 public class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    TextView person_name_on_navigation_view;
-    LinearLayout navigation_drawer_header_container;
-    SwitchCompat nav_share_location_switch;
+    public TextView person_name_on_navigation_view;
+    public LinearLayout navigation_drawer_header_container;
+    public SwitchCompat nav_share_location_switch;
+    private Service service;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        service = new Service(getBaseContext());
     }
 
     @Override
     public void setContentView(@LayoutRes int layoutResID) {
+
 
         DrawerLayout drawer = (DrawerLayout) getLayoutInflater().inflate(R.layout.navigation_view, null);
         FrameLayout activityContainer = (FrameLayout) drawer.findViewById(R.id.activity_content);
@@ -51,7 +56,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
 
         getLayoutInflater().inflate(layoutResID, activityContainer, true);
         super.setContentView(drawer);
-        
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -60,6 +65,9 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+//        nav_share_location_switch = (SwitchCompat) findViewById(R.id.nav_share_switch);
+
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -68,13 +76,13 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         // Handle navigation view item clicks here.
         int id = menuItem.getItemId();
 
+
+
          if (id == R.id.nav_share_switch_item) {
             if (nav_share_location_switch.isChecked()){
-                Log.d("SendLocationService", "true");
                 nav_share_location_switch.setChecked(false);
                 stopService(new Intent(this, SendLocationService.class));
             } else {
-                Log.d("SendLocationService", "false");
                 nav_share_location_switch.setChecked(true);
                 startService(new Intent(this, SendLocationService.class));
             }
@@ -85,7 +93,13 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
             startActivity(friendsIntent);
         } else if (id == R.id.nav_messages) {
             startActivity(new Intent(this, MessagesListActivity.class));
-        }
+        } else if (id == R.id.nav_map) {
+             Intent intent = new Intent(this, MapsActivity.class);
+             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+             startActivity(intent);
+//             startActivity(new Intent(this, MapsActivity.class));
+
+         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -94,7 +108,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+        // Inflate th emenu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         person_name_on_navigation_view = (TextView) findViewById(R.id.name_of_person_in_navigation_view);
         nav_share_location_switch = (SwitchCompat) findViewById(R.id.nav_share_switch);
@@ -113,6 +127,13 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(new Intent(getBaseContext(), MyProfileActivity.class));
             }
         });
+
+
+        if (service.isMyServiceRunning(SendLocationService.class)) {
+            nav_share_location_switch.setChecked(true);
+        } else {
+            nav_share_location_switch.setChecked(false);
+        }
         return true;
     }
 
@@ -129,6 +150,19 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (nav_share_location_switch != null) {
+            if (service.isMyServiceRunning(SendLocationService.class)) {
+                nav_share_location_switch.setChecked(true);
+            } else {
+                nav_share_location_switch.setChecked(false);
+            }
+        }
     }
 
     @Override

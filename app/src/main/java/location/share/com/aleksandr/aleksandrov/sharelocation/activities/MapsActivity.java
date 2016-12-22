@@ -17,16 +17,10 @@ import android.os.Handler;
 import android.os.SystemClock;
 import android.support.design.widget.NavigationView;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SwitchCompat;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Interpolator;
@@ -61,7 +55,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import location.share.com.aleksandr.aleksandrov.sharelocation.FriendsListFragment;
 import location.share.com.aleksandr.aleksandrov.sharelocation.R;
 import location.share.com.aleksandr.aleksandrov.sharelocation.Res;
 import location.share.com.aleksandr.aleksandrov.sharelocation.classes.UserInfo;
@@ -75,6 +68,10 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Na
     MyTask myTask;
     HashMap<Integer, UserInfo> userInfoHashMap = new HashMap<>();
 
+//    private TextView person_name_on_navigation_view;
+//    private LinearLayout navigation_drawer_header_container;
+//    private SwitchCompat nav_share_location_switch;
+
 
     BroadcastReceiver broadcastReceiverForGroupLocation;
     IntentFilter intentFilterForGroupLocation;
@@ -82,10 +79,13 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Na
 
     SharedPreferences sharedPreferences;
 
+    private String LOG_TAG = "MyLogTag";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.map_activity);
+        Log.d(LOG_TAG, "onCreate");
 
 
         sharedPreferences = getSharedPreferences(Res.PREFERENCE_KEY, MODE_PRIVATE);
@@ -187,6 +187,7 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Na
     @Override
     protected void onRestart() {
         super.onRestart();
+        Log.d(LOG_TAG, "onRestart");
         if (sharedPreferences.getString(Res.SHARED_PREFERENCES_E_TOKEN, "").equals("")){
             startActivity(new Intent(getBaseContext(), AuthorizationActivity.class));
         } else {
@@ -198,15 +199,7 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Na
 
 
 
-    private boolean isMyServiceRunning(Class<?> serviceClass) {
-        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-            if (serviceClass.getName().equals(service.service.getClassName())) {
-                return true;
-            }
-        }
-        return false;
-    }
+
 
 
 
@@ -228,15 +221,13 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Na
 
         if (id == R.id.nav_share_switch_item) {
             if (nav_share_location_switch.isChecked()){
-                Log.d("SendLocationService", "true");
                 nav_share_location_switch.setChecked(false);
                 stopService(new Intent(this, SendLocationService.class));
             } else {
-                Log.d("SendLocationService", "false");
                 nav_share_location_switch.setChecked(true);
                 startService(new Intent(this, SendLocationService.class));
             }
-            return false;
+            return true;
         } else if (id == R.id.nav_friends) {
 
             Intent friendsIntent = new Intent(this, FriendsActivity.class);
@@ -253,6 +244,7 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Na
     @Override
     protected void onPause() {
         super.onPause();
+        Log.d(LOG_TAG, "onPause");
         Intent intent = new Intent(MainActivity.BROADCAST_ACTION);
         intent.putExtra(MainActivity.ON_OFF_SCREEN, false);
         sendBroadcast(intent);
@@ -261,17 +253,21 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Na
     @Override
     protected void onStop() {
         super.onStop();
+        Log.d(LOG_TAG, "onStop");
     }
 
     public void onDestroy() {
+
+        super.onDestroy();
+        Log.d(LOG_TAG, "onDestroy");
         stopService(new Intent(this, GetLocationFromTheServerService.class));
 //        unregisterReceiver(broadcastReceiver);
         unregisterReceiver(broadcastReceiverForGroupLocation);
-        super.onDestroy();
     }
 
     public void onResume() {
         super.onResume();
+        Log.d(LOG_TAG, "onResume");
         Intent intent = new Intent(MainActivity.BROADCAST_ACTION);
         intent.putExtra(MainActivity.ON_OFF_SCREEN, true);
         sendBroadcast(intent);
@@ -461,8 +457,5 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Na
                 bmImage.setImageBitmap(result);
             }
         }
-
     }
-
-
 }

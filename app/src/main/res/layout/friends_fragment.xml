@@ -13,13 +13,5 @@
             <!--android:name="location.share.com.aleksandr.aleksandrov.sharelocation.classes.FriendsList"-->
             <!--android:layout_width="match_parent"-->
             <!--android:layout_height="match_parent"/>-->
-
-
-
-
-
     </RelativeLayout>
-
-
-
 </FrameLayout>

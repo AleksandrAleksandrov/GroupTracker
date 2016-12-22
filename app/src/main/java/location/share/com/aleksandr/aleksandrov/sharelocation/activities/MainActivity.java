@@ -6,9 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.view.View;
 import android.view.WindowManager;
-import android.widget.Switch;
 import android.widget.TabHost;
 
 import location.share.com.aleksandr.aleksandrov.sharelocation.R;
@@ -56,7 +54,7 @@ public class MainActivity extends TabActivity {
         tabHost.addTab(tabSpec);
 
         tabSpec = tabHost.newTabSpec(MAP_TAG_FO_TAB);
-        tabSpec.setIndicator(getString(R.string.map_tab));
+        tabSpec.setIndicator(getString(R.string.map));
         tabSpec.setContent(new Intent(this, MapsActivity.class));
         tabHost.addTab(tabSpec);
     }

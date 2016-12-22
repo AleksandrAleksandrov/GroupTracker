@@ -36,7 +36,7 @@
     <string name="speed">Speed</string>
     <string name="km_per_hour">km/h</string>
     <string name="main_tab">Main</string>
-    <string name="map_tab">Map</string>
+    <string name="map">Map</string>
     <string name="text_tab3">This is the third tab</string>
     <string name="action_settings">Settings</string>
 

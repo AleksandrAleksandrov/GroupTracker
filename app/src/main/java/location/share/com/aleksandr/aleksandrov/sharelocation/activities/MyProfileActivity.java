@@ -41,6 +41,7 @@ public class MyProfileActivity extends BaseActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.my_profile_menu, menu);
 
 
@@ -65,6 +66,7 @@ public class MyProfileActivity extends BaseActivity {
     }
 
     public boolean onOptionsItemSelected(MenuItem menuItem) {
+        super.onOptionsItemSelected(menuItem);
         if (menuItem.getItemId() == R.id.my_profile_menu_item_edit) {
             startActivityForResult(new Intent(getBaseContext(), EditMyProfileActivity.class), 90);
         }

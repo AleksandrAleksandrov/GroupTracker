@@ -17,7 +17,7 @@
     <string name="speed">Скорость</string>
     <string name="km_per_hour">км/ч</string>
     <string name="main_tab">Главный</string>
-    <string name="map_tab">Карта</string>
+    <string name="map">Карта</string>
     <string name="text_tab3">This is the third tab</string>
     <string name="action_settings">Настройки</string>
 
