@@ -1,8 +1,11 @@
 package location.share.com.aleksandr.aleksandrov.sharelocation.classes;
 
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import location.share.com.aleksandr.aleksandrov.sharelocation.R;
 
 /**
  * Created by Aleksandr on 10/27/2016.
@@ -47,6 +50,7 @@ public class UserInfo {
     }
 
     public Marker getMarker() {
+        marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.gt_2_42px));
         return marker;
     }
 
