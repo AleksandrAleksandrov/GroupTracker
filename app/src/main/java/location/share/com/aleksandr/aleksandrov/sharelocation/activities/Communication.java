@@ -16,6 +16,7 @@ import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.net.URLEncoder;
 
 import location.share.com.aleksandr.aleksandrov.sharelocation.Res;
 import location.share.com.aleksandr.aleksandrov.sharelocation.classes.MyProfileInfo;
@@ -74,10 +75,10 @@ public class Communication  {
         Editor editor = sharedPreferences.edit();
         MyProfileInfo myProfileInfo = new MyProfileInfo();
         try {
-            URL url = new URL(Res.PROTOCOL_SCHEME + ":"
+            URL url = new URL(URLEncoder.encode(Res.PROTOCOL_SCHEME, "UTF-8") + ":"
                     + Res.SET_MY_INFO
                     + Res.TOKEN + "=" + sharedPreferences.getString(Res.SHARED_PREFERENCES_E_TOKEN, "") + "&"
-                    + Res.FIO + "=" + fio + "&"
+                    + Res.FIO + "=" + URLEncoder.encode(fio, "UTF-8") + "&"
                     + Res.EMAIL + "=" + email + "&"
                     + Res.PHONE + "=" + phoneNumber);
 

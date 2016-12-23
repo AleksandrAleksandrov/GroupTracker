@@ -46,5 +46,6 @@
     <string name="hint_email">Email</string>
     <string name="edit">Edit</string>
     <string name="done">Done</string>
+    <string name="full_name">Full name</string>
 
 </resources>

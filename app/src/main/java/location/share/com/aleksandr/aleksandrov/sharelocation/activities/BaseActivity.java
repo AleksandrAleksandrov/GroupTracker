@@ -2,6 +2,7 @@ package location.share.com.aleksandr.aleksandrov.sharelocation.activities;
 
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
@@ -38,12 +39,14 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
     public LinearLayout navigation_drawer_header_container;
     public SwitchCompat nav_share_location_switch;
     private Service service;
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         service = new Service(getBaseContext());
+        sharedPreferences = getSharedPreferences(Res.PREFERENCE_KEY, MODE_PRIVATE);
     }
 
     @Override
@@ -117,9 +120,9 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
 //            nav_share_location_switch.setChecked(true);
 //        }
 //
-//        sharedPreferences = getSharedPreferences(Res.PREFERENCE_KEY, MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences(Res.PREFERENCE_KEY, MODE_PRIVATE);
 //
-//        person_name_on_navigation_view.setText(sharedPreferences.getString(Res.SHARED_PREFERENCES_FIO, ""));
+        person_name_on_navigation_view.setText(sharedPreferences.getString(Res.SHARED_PREFERENCES_FIO, ""));
         navigation_drawer_header_container = (LinearLayout) findViewById(R.id.navigation_drawer_header_container);
         navigation_drawer_header_container.setOnClickListener(new View.OnClickListener() {
             @Override

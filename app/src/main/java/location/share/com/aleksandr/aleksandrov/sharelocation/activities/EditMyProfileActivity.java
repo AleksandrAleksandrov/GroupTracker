@@ -63,36 +63,10 @@ public class EditMyProfileActivity extends BaseActivity {
 
         sharedPreferences = getSharedPreferences(Res.PREFERENCE_KEY, MODE_PRIVATE);
         user_fio.setText(sharedPreferences.getString(Res.SHARED_PREFERENCES_FIO, ""));
+        user_phone.setText(sharedPreferences.getString(Res.SHARED_PREFERENCES_PHONE_NUMBER, ""));
+        user_email.setText(sharedPreferences.getString(Res.SHARED_PREFERENCES_EMAIL, ""));
 
         imageView = (ImageView) findViewById(R.id.my_profile_image_edit);
-
-
-//        Observable.create(new Observable.OnSubscribe<String>() {
-//            @Override
-//            public void call(final Subscriber<? super String> subscriber) {
-//                Communication communication = new Communication(getBaseContext());
-//                String data = communication.getMyInfo();
-//                subscriber.onNext(data.toString()); // Emit the contents of the URL
-//                subscriber.onCompleted(); // Nothing more to emit
-//            }
-//        })
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new Action1<String>() {
-//                    @Override
-//                    public void call(final String s) {
-//                        user_fio.setText(s.toString());
-//                    }
-//                });
-
-
-//        imageView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                dispatchTakePictureIntent();
-//            }
-//        });
-
 
     }
 
@@ -194,8 +168,8 @@ public class EditMyProfileActivity extends BaseActivity {
                 public void call(final Subscriber<? super MyProfileInfo> subscriber) {
                     Communication communication = new Communication(getBaseContext());
                     MyProfileInfo data = communication.setMyInfo(user_fio.getText().toString(), user_email.getText().toString(), user_phone.getText().toString());
-                    subscriber.onNext(data); // Emit the contents of the URL
-                    subscriber.onCompleted(); // Nothing more to emit
+                    subscriber.onNext(data);
+                    subscriber.onCompleted();
                 }
             })
                     .subscribeOn(Schedulers.io())
