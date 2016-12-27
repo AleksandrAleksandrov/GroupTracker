@@ -33,8 +33,8 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class RegistrationFragment extends Fragment {
 
-    EditText email, userName, password, confirmPassword;
-    SharedPreferences sharedPreferences;
+    private EditText email, userName, password, confirmPassword;
+    private SharedPreferences sharedPreferences;
     private Button button_sing_up;
 
     public RegistrationFragment() {
@@ -81,8 +81,6 @@ public class RegistrationFragment extends Fragment {
 
         @Override
         protected Boolean doInBackground(String... params) {
-//            String email = "";
-//            String us = null;
             BufferedReader reader=null;
 
             try {
@@ -120,11 +118,6 @@ public class RegistrationFragment extends Fragment {
                     ex.printStackTrace();
                 }
             }
-
-
-
-
-
             return false;
         }
 
@@ -136,8 +129,6 @@ public class RegistrationFragment extends Fragment {
             } else {
                 Toast.makeText(getActivity(), "Не верно имя пользователя или пароль", Toast.LENGTH_SHORT).show();
             }
-//            Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
-//            startActivity(intent);
         }
     }
     private void finishWithResult() {

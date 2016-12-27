@@ -242,9 +242,6 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Na
     protected void onPause() {
         super.onPause();
         Log.d(LOG_TAG, "onPause");
-        Intent intent = new Intent(MainActivity.BROADCAST_ACTION);
-        intent.putExtra(MainActivity.ON_OFF_SCREEN, false);
-        sendBroadcast(intent);
     }
 
     @Override
@@ -265,9 +262,6 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Na
     public void onResume() {
         super.onResume();
         Log.d(LOG_TAG, "onResume");
-        Intent intent = new Intent(MainActivity.BROADCAST_ACTION);
-        intent.putExtra(MainActivity.ON_OFF_SCREEN, true);
-        sendBroadcast(intent);
     }
 
     public void onClickGetLocation(View view) {
