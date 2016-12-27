@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -14,7 +13,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,10 +20,9 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.google.android.gms.maps.GoogleMap;
-
 import location.share.com.aleksandr.aleksandrov.sharelocation.R;
 import location.share.com.aleksandr.aleksandrov.sharelocation.Res;
+import location.share.com.aleksandr.aleksandrov.sharelocation.authorization.AuthorizationActivity;
 import location.share.com.aleksandr.aleksandrov.sharelocation.services.SendLocationService;
 import location.share.com.aleksandr.aleksandrov.sharelocation.services.Service;
 
@@ -97,10 +94,10 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_messages) {
             startActivity(new Intent(this, MessagesListActivity.class));
         } else if (id == R.id.nav_map) {
-             Intent intent = new Intent(this, MapsActivity.class);
+             Intent intent = new Intent(this, MapActivity.class);
              intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
              startActivity(intent);
-//             startActivity(new Intent(this, MapsActivity.class));
+//             startActivity(new Intent(this, MapActivity.class));
 
          }
 
@@ -148,8 +145,13 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.action_log_out) {
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.clear();
+            editor.commit();
+            Intent authorizationIntent = new Intent(BaseActivity.this, AuthorizationActivity.class);
+            authorizationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(authorizationIntent);
         }
 
         return super.onOptionsItemSelected(item);

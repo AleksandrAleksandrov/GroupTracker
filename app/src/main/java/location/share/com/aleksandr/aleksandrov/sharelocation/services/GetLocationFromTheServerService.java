@@ -24,7 +24,7 @@ import java.net.URL;
 import java.util.ArrayList;
 
 import location.share.com.aleksandr.aleksandrov.sharelocation.Res;
-import location.share.com.aleksandr.aleksandrov.sharelocation.activities.MapsActivity;
+import location.share.com.aleksandr.aleksandrov.sharelocation.activities.MapActivity;
 import location.share.com.aleksandr.aleksandrov.sharelocation.classes.UsersLocation;
 
 /**
@@ -68,7 +68,7 @@ public class GetLocationFromTheServerService extends Service {
                                 UsersLocation usersLocation = new UsersLocation(obj.getInt(Res.ID), obj.getDouble(Res.LATITUDE), obj.getDouble(Res.LONGITUDE), obj.getDouble(Res.SPEED));
                                 Log.d("myMap", "" + obj.getInt(Res.ID)+ obj.getDouble(Res.LATITUDE) + obj.getDouble(Res.LONGITUDE)+ obj.getDouble(Res.SPEED));
                                 alUsers.add(usersLocation);
-                                intent = new Intent(MapsActivity.BROADCAST_ACTION_FOR_GET_GROUP_LOCATION);
+                                intent = new Intent(MapActivity.BROADCAST_ACTION_FOR_GET_GROUP_LOCATION);
                             }
 
                         }

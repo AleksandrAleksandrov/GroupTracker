@@ -18,6 +18,7 @@ import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Interpolator;
@@ -59,7 +60,7 @@ import location.share.com.aleksandr.aleksandrov.sharelocation.classes.UsersLocat
 import location.share.com.aleksandr.aleksandrov.sharelocation.services.GetLocationFromTheServerService;
 import location.share.com.aleksandr.aleksandrov.sharelocation.services.SendLocationService;
 
-public class MapsActivity extends BaseActivity implements OnMapReadyCallback, NavigationView.OnNavigationItemSelectedListener {
+public class MapActivity extends BaseActivity implements OnMapReadyCallback, NavigationView.OnNavigationItemSelectedListener {
 
     private GoogleMap mMap;
     MyTask myTask;
@@ -194,11 +195,11 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Na
 
     }
 
-
-
-
-
-
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//
+//        return true;
+//    }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override

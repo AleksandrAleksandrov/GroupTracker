@@ -46,8 +46,6 @@ public class LogInFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
     }
 
     @Nullable
@@ -163,7 +161,7 @@ public class LogInFragment extends Fragment {
             } else {
                 Toast.makeText(getContext(), "Не верно имя пользователя или пароль", Toast.LENGTH_SHORT).show();
             }
-//            Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
+//            Intent intent = new Intent(getApplicationContext(), MapActivity.class);
 //            startActivity(intent);
         }
     }

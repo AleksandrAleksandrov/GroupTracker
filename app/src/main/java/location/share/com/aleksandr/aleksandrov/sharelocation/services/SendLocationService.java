@@ -25,7 +25,6 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Date;
 
-import location.share.com.aleksandr.aleksandrov.sharelocation.activities.MapsActivity;
 import location.share.com.aleksandr.aleksandrov.sharelocation.Res;
 import location.share.com.aleksandr.aleksandrov.sharelocation.activities.TabActivityMain;
 import location.share.com.aleksandr.aleksandrov.sharelocation.classes.InfoLocation;
@@ -200,7 +199,7 @@ public class SendLocationService extends Service {
             intent.putExtra("source", source);
             sendBroadcast(intent);
 
-//            Intent intent1 = new Intent(MapsActivity.BROADCAST_ACTION);
+//            Intent intent1 = new Intent(MapActivity.BROADCAST_ACTION);
 //            intent1.putExtra(TabActivityMain.ZERO, "0");
 //            intent1.putExtra(TabActivityMain.LATITUDE, infoLocation.getLatitude());
 //            intent1.putExtra(TabActivityMain.LONGITUDE, infoLocation.getLongitude());
@@ -229,7 +228,7 @@ public class SendLocationService extends Service {
 //            intent.putExtra(TabActivityMain.SPEED, infoLocation.getSpeed());
 //            sendBroadcast(intent);
 //
-//            Intent intent1 = new Intent(MapsActivity.BROADCAST_ACTION);
+//            Intent intent1 = new Intent(MapActivity.BROADCAST_ACTION);
 //            intent1.putExtra(TabActivityMain.ZERO, "0");
 //            intent1.putExtra(TabActivityMain.LATITUDE, infoLocation.getLatitude());
 //            intent1.putExtra(TabActivityMain.LONGITUDE, infoLocation.getLongitude());
