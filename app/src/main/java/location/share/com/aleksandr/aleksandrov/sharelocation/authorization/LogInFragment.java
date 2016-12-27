@@ -1,96 +1,87 @@
-package location.share.com.aleksandr.aleksandrov.sharelocation.activities;
+package location.share.com.aleksandr.aleksandrov.sharelocation.authorization;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 
 import location.share.com.aleksandr.aleksandrov.sharelocation.R;
 import location.share.com.aleksandr.aleksandrov.sharelocation.Res;
-import location.share.com.aleksandr.aleksandrov.sharelocation.classes.UsersLocation;
+import location.share.com.aleksandr.aleksandrov.sharelocation.activities.Communication;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
- * Created by Aleksandr on 11/1/2016.
+ * Created by Aleksandr on 12/27/2016.
  */
 
-public class AuthorizationActivity extends AppCompatActivity {
+public class LogInFragment extends Fragment {
 
     MyLoginAsyncTask myLoginAsyncTask;
+    private Button buttonLogin;
 
     EditText nick_name_et, password_et;
     SharedPreferences sharedPreferences;
 
+    public LogInFragment() {
 
-    protected void onCreate(Bundle savedInstanceState) {
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.authorization_layout);
 
 
+    }
 
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.log_in_fragment, container, false);
+        nick_name_et = (EditText) view.findViewById(R.id.edit_text_input_nick_name);
+        password_et = (EditText) view.findViewById(R.id.edit_text_input_password);
+        buttonLogin = (Button) view.findViewById(R.id.login_button);
+        buttonLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                myLoginAsyncTask = new MyLoginAsyncTask();
+                myLoginAsyncTask.execute(nick_name_et.getText().toString(), password_et.getText().toString());
+            }
+        });
+//        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+//        if (nick_name_et.isSelected()) {
+//            imm.showSoftInput(nick_name_et, InputMethodManager.SHOW_IMPLICIT);
+//        }
 
-        nick_name_et = (EditText) findViewById(R.id.edit_text_input_nick_name);
-        password_et = (EditText) findViewById(R.id.edit_text_input_password);
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (nick_name_et.isSelected()) {
-            imm.showSoftInput(nick_name_et, InputMethodManager.SHOW_IMPLICIT);
-        }
-
-        sharedPreferences = getSharedPreferences(Res.PREFERENCE_KEY, MODE_PRIVATE);
+        sharedPreferences = getActivity().getSharedPreferences(Res.PREFERENCE_KEY, MODE_PRIVATE);
         if (!sharedPreferences.getString(Res.SHARED_PREFERENCES_NICK_NAME, "").equals("")) {
             nick_name_et.setText(sharedPreferences.getString(Res.SHARED_PREFERENCES_NICK_NAME, ""));
         }
         if (!sharedPreferences.getString(Res.SHARED_PREFERENCES_PASSWORD, "").equals("")) {
             password_et.setText(sharedPreferences.getString(Res.SHARED_PREFERENCES_PASSWORD, ""));
         }
-
-
-        //Заглушка для того чтобы когда пользователь уже ввел данные у него их уже не запрашивало
-//        if (!sharedPreferences.getString(Res.SHARED_PREFERENCES_NICK_NAME, "").equals("") && !sharedPreferences.getString(Res.SHARED_PREFERENCES_PASSWORD, "").equals("")) {
-//            myLoginAsyncTask = new MyLoginAsyncTask();
-//            myLoginAsyncTask.execute(nick_name_et.getText().toString(), password_et.getText().toString());
-//        }
-
+        return view;
     }
 
     public void onClickLogin(View view) {
-        myLoginAsyncTask = new MyLoginAsyncTask();
-        myLoginAsyncTask.execute(nick_name_et.getText().toString(), password_et.getText().toString());
 
-    }
 
-    public void onClickCreateNewAccount(View view) {
-        startActivityForResult(new Intent(this.getBaseContext(), CreateNewAccountActivity.class), RESULT_OK);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == RESULT_OK) {
-            finish();
-        }
     }
 
     class MyLoginAsyncTask extends AsyncTask<String, Void, Boolean> {
@@ -143,7 +134,7 @@ public class AuthorizationActivity extends AppCompatActivity {
 //                        editor.putString(Res.SHARED_PREFERENCES_PASSWORD, params[1]);
                         editor.putString(Res.SHARED_PREFERENCES_E_TOKEN, text);
                         editor.commit();
-                        Communication communication = new Communication(getBaseContext());
+                        Communication communication = new Communication(getActivity());
                         communication.getMyInfo();
 //                        try {
 //                            String param = Res.TOKEN + "=" + sharedPreferences.getString(Res.SHARED_PREFERENCES_E_TOKEN, "") + "&" + Res.USER_NAME + "=" + sharedPreferences.getString(Res.SHARED_PREFERENCES_NICK_NAME, "");
@@ -216,9 +207,9 @@ public class AuthorizationActivity extends AppCompatActivity {
         protected void onPostExecute(Boolean result) {
             super.onPostExecute(result);
             if (result) {
-                finish();
+                getActivity().finish();
             } else {
-                Toast.makeText(getBaseContext(), "Не верно имя пользователя или пароль", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Не верно имя пользователя или пароль", Toast.LENGTH_SHORT).show();
             }
 //            Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
 //            startActivity(intent);

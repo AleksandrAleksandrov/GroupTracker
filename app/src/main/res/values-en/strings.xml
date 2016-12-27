@@ -47,5 +47,6 @@
     <string name="edit">Edit</string>
     <string name="done">Done</string>
     <string name="full_name">Full name</string>
+    <string name="authorization">Authorization</string>
 
 </resources>

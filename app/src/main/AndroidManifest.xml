@@ -80,10 +80,8 @@
 
         <activity android:name=".activities.TabActivityMain"/>-->
 
-        <activity android:name=".activities.AuthorizationActivity"
-                  android:theme="@style/AppTheme.NoActionBar">
-
-            </activity>
+        <activity android:name=".authorization.AuthorizationActivity"
+                  android:theme="@style/AppTheme.NoActionBar"/>
         
         <activity android:name=".activities.FriendsActivity"></activity>
 
@@ -92,8 +90,6 @@
         <activity android:name=".activities.ChatsActivity"></activity>
 
         <activity android:name=".activities.MessagesListActivity"></activity>
-
-        <activity android:name=".activities.CreateNewAccountActivity"></activity>
 
         <activity android:name=".activities.MyProfileActivity"></activity>
 

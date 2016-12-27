@@ -1,7 +1,5 @@
 package location.share.com.aleksandr.aleksandrov.sharelocation.activities;
 
-import android.app.ActivityManager;
-
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -19,14 +17,12 @@ import android.support.design.widget.NavigationView;
 import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.widget.SwitchCompat;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.GoogleMap;
@@ -57,6 +53,7 @@ import java.util.Map;
 
 import location.share.com.aleksandr.aleksandrov.sharelocation.R;
 import location.share.com.aleksandr.aleksandrov.sharelocation.Res;
+import location.share.com.aleksandr.aleksandrov.sharelocation.authorization.AuthorizationActivity;
 import location.share.com.aleksandr.aleksandrov.sharelocation.classes.UserInfo;
 import location.share.com.aleksandr.aleksandrov.sharelocation.classes.UsersLocation;
 import location.share.com.aleksandr.aleksandrov.sharelocation.services.GetLocationFromTheServerService;

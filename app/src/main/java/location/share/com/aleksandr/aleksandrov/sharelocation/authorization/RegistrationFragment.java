@@ -1,74 +1,74 @@
-package location.share.com.aleksandr.aleksandrov.sharelocation.activities;
+package location.share.com.aleksandr.aleksandrov.sharelocation.authorization;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.BoolRes;
-import android.support.annotation.ColorRes;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TextInputLayout;
-import android.support.v4.content.res.ResourcesCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.view.KeyEvent;
-import android.view.MotionEvent;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONObject;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
-import java.net.URLConnection;
-import java.net.URLEncoder;
 
 import location.share.com.aleksandr.aleksandrov.sharelocation.R;
 import location.share.com.aleksandr.aleksandrov.sharelocation.Res;
 
+import static android.app.Activity.RESULT_OK;
+import static android.content.Context.MODE_PRIVATE;
+
 /**
- * Created by Aleksandr on 11/21/2016.
+ * Created by Aleksandr on 12/27/2016.
  */
 
-public class CreateNewAccountActivity extends AppCompatActivity {
+public class RegistrationFragment extends Fragment {
 
     EditText email, userName, password, confirmPassword;
     SharedPreferences sharedPreferences;
+    private Button button_sing_up;
 
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.create_new_account_activity);
-
-        email = (EditText) findViewById(R.id.edit_text_input_email);
-        userName = (EditText) findViewById(R.id.edit_text_input_name);
-        password = (EditText) findViewById(R.id.edit_text_input_password_create_new_account);
-        confirmPassword = (EditText) findViewById(R.id.edit_text_input_confirm_password_create_new_account);
-
-        sharedPreferences = getSharedPreferences(Res.PREFERENCE_KEY, MODE_PRIVATE);
-
+    public RegistrationFragment() {
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
-    public void onClickRegister(View view) {
-        if (!email.getText().toString().equals("") & !userName.getText().equals("") & !password.getText().equals("") & !confirmPassword.getText().equals("")) {
-            SingUp singUp = new SingUp();
-            singUp.execute(email.getText().toString(), userName.getText().toString(), password.getText().toString(), confirmPassword.getText().toString());
-        }
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.registration_fragment, container, false);
 
+        email = (EditText) view.findViewById(R.id.edit_text_input_email);
+        userName = (EditText) view.findViewById(R.id.edit_text_input_name);
+        password = (EditText) view.findViewById(R.id.edit_text_input_password_create_new_account);
+        confirmPassword = (EditText) view.findViewById(R.id.edit_text_input_confirm_password_create_new_account);
+        button_sing_up = (Button) view.findViewById(R.id.sing_up_button);
+        button_sing_up.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!email.getText().toString().equals("") & !userName.getText().equals("") & !password.getText().equals("") & !confirmPassword.getText().equals("")) {
+                    SingUp singUp = new SingUp();
+                    singUp.execute(email.getText().toString(), userName.getText().toString(), password.getText().toString(), confirmPassword.getText().toString());
+                }
+            }
+        });
+
+        sharedPreferences = getActivity().getSharedPreferences(Res.PREFERENCE_KEY, MODE_PRIVATE);
+
+
+        return view;
     }
 
     class SingUp extends AsyncTask<String, Void, Boolean> {
@@ -134,19 +134,18 @@ public class CreateNewAccountActivity extends AppCompatActivity {
             if (result) {
                 finishWithResult();
             } else {
-                Toast.makeText(getBaseContext(), "Не верно имя пользователя или пароль", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Не верно имя пользователя или пароль", Toast.LENGTH_SHORT).show();
             }
 //            Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
 //            startActivity(intent);
         }
     }
-    private void finishWithResult()
-    {
+    private void finishWithResult() {
         Bundle conData = new Bundle();
         conData.putString("param_result", "Thanks Thanks");
         Intent intent = new Intent();
         intent.putExtras(conData);
-        setResult(RESULT_OK, intent);
-        finish();
+        getActivity().setResult(RESULT_OK, intent);
+        getActivity().finish();
     }
 }
