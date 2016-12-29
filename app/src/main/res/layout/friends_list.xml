@@ -5,22 +5,13 @@
              android:layout_width="match_parent"
              android:layout_height="match_parent">
 
-    <RelativeLayout
+    <!--<Button android:id="@+id/button_refresh_contact_list"-->
+            <!--android:text="@string/refresh_contacts"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"/>-->
+
+    <ListView
+        android:id="@+id/list_view_contacts"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-            <fragment
-                android:id="@+id/brands_friends"
-                android:name="location.share.com.aleksandr.aleksandrov.sharelocation.classes.FriendsList"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-
-
-
-
-
-    </RelativeLayout>
-
-
-
+        android:layout_height="match_parent"/>
 </FrameLayout>

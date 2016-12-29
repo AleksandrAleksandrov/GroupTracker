@@ -4,13 +4,15 @@
     <string name="map_type_satellite">Satellite</string>
     <string name="map_type_terrian">Terrian</string>
     <string name="map_type_normal">Normal</string>
-    <string name="friends">Friends</string>
+    <string name="contacts">Contacts</string>
     <string name="messages">Messages</string>
 
     <string name="search_hint">Search</string>
 
     <string name="send_a_message">Send a message</string>
     <string name="add_to_friends">Add to friends</string>
+
+    <string name="refresh_contacts">Refresh contacts list</string>
 
 
 

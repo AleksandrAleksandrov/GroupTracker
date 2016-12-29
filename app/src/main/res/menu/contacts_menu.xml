@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/my_profile_menu_item_edit"
-        android:title="@string/edit"/>
+        android:id="@+id/menu_item_refresh"
+        android:title="@string/refresh_contacts"/>
 
 </menu>

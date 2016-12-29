@@ -8,6 +8,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
@@ -62,12 +64,10 @@ public class FriendsList extends ListFragment {
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-//        Toast.makeText(getActivity(), getListView().getItemAtPosition(position).toString(), Toast.LENGTH_LONG).show();
         Intent profileIntenet = new Intent(getActivity(), ProfileActivity.class);
         profileIntenet.putExtra("users_name", getListView().getItemAtPosition(position).toString());
         startActivity(profileIntenet);
     }
-
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -161,8 +161,8 @@ public class FriendsList extends ListFragment {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            MyListAdapter adapter = new MyListAdapter(getActivity().getBaseContext(), R.layout.fragment_list_item_for_friends, data);
-            setListAdapter(adapter);
+//            MyListAdapter adapter = new MyListAdapter(getActivity().getBaseContext(), R.layout.fragment_list_item_for_friends, data);
+//            setListAdapter(adapter);
         }
     }
  }

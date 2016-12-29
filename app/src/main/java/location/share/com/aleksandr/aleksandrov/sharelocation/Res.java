@@ -5,10 +5,15 @@ package location.share.com.aleksandr.aleksandrov.sharelocation;
  */
 
 public class Res {
-    public static final String PROTOCOL_SCHEME = "http";
+    public static final String DATA_BASE_SHARE_LOCATION = "share_location_data_base";
+    public static final String CONTACTS_DATA_BASE_TABLE = "contacts_table";
+    public static final int DATA_BASE_VERSION = 1;
+
+    public static final String PROTOCOL_SCHEME = "http:";
     public static final String URL = "//grouptracker.pp.ua/api/gd?";
     public static final String GET_OBJECTS = "//grouptracker.pp.ua/api/getobj?";
     public static final String GET_OBJECT_INFO = "//grouptracker.pp.ua/api/getobjinfo?";
+    public static final String GET_USER_INFO_BY_PHONE = "//grouptracker.pp.ua/api/getuserinfobyphone?";
     // get my information.
     public static final String GET_MY_INFO = "//grouptracker.pp.ua/api/getmyinfo?";
     public static final String SET_MY_INFO = "//grouptracker.pp.ua/api/setmyinfo?";
@@ -16,6 +21,7 @@ public class Res {
 
     public static final String LOGIN = "//grouptracker.pp.ua/api/login";
     public static final String ID = "id";
+    public static final String USERNAME = "username";
 //    public static final String TITLE = "title";
     public static final String FIO = "fio";
     public static final String EMAIL = "email";
@@ -28,11 +34,6 @@ public class Res {
     public static final String PHONE_NUMBER = "phone_number";
     public static final String PHONE = "phone";
     public static final String CONFIRM_PASSWORD = "confirmPassword";
-    // Aleksandrov 6
-    // Sliachtitskiy 2
-    // Luba 15
-    // Chiruk 14
-//    public static final int USER_ID = 6;
 
     public static final String PREFERENCE_KEY = "MyPreferenceTAG";
     public static final String SHARED_PREFERENCES_PASSWORD = "MyPassword";
@@ -44,7 +45,8 @@ public class Res {
     public static final String SHARED_PREFERENCES_LAST_NAME = "LastName";
     public static final String SHARED_PREFERENCES_E_TOKEN = "eToken";
     public static final String SHARED_PREFERENCES_PHONE_NUMBER = "phone_number";
-    // token jRZ0RKZ2SdRLwWf63fArRHyiH9oHhDIR
+    // token jRZ0RKZ2SdRLwWf63fArRHyiH9oHhDIR  token for test OzqFcJm6qiZ8c-uH6U16nwqaT6lb4JgF
+
 
     public static final String ARRAY_LIST_USERS = "alUsers";
 }

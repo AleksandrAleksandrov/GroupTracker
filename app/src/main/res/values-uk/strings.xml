@@ -28,7 +28,7 @@
     <string name="map_type_normal">Схема</string>
     <string name="map_type_satellite">Супутник</string>
     <string name="map_type_terrian">Рельєф</string>
-    <string name="friends">Друзі</string>
+    <string name="contacts">Контакти</string>
     <string name="messages">Повідомлення</string>
     <string name="search_hint">Пошук</string>
     <string name="send_a_message">Написати повідомлення</string>
@@ -39,4 +39,5 @@
     <string name="edit">Редагувати</string>
     <string name="done">Зроблено</string>
     <string name="full_name">Повне ім\'я</string>
+    <string name="refresh_contacts">Оновити список контактів</string>
 </resources>

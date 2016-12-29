@@ -14,6 +14,7 @@ import location.share.com.aleksandr.aleksandrov.sharelocation.R;
 public class UserInfo {
     private int id;
     private String name = null;
+    private String fio;
     private LatLng latLng;
     private double latitude;
     private double longitude;
@@ -23,6 +24,14 @@ public class UserInfo {
 
     public UserInfo() {
 
+    }
+
+    public String getFio() {
+        return fio;
+    }
+
+    public void setFio(String fio) {
+        this.fio = fio;
     }
 
     public int getId() {

@@ -209,12 +209,8 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback, Nav
 
         if (id == R.id.nav_hybrid && mMap.getMapType() != GoogleMap.MAP_TYPE_HYBRID) {
             mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-        } else if (id == R.id.nav_satellite && mMap.getMapType() != GoogleMap.MAP_TYPE_SATELLITE) {
-            mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
         } else if (id == R.id.nav_terrian && mMap.getMapType() != GoogleMap.MAP_TYPE_TERRAIN) {
             mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
-        } else if (id == R.id.nav_normal && mMap.getMapType() != GoogleMap.MAP_TYPE_NORMAL) {
-            mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         }
 
         if (id == R.id.nav_share_switch_item) {

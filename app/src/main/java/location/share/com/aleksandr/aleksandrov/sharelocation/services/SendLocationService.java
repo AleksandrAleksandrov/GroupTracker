@@ -26,7 +26,6 @@ import java.net.URL;
 import java.util.Date;
 
 import location.share.com.aleksandr.aleksandrov.sharelocation.Res;
-import location.share.com.aleksandr.aleksandrov.sharelocation.activities.TabActivityMain;
 import location.share.com.aleksandr.aleksandrov.sharelocation.classes.InfoLocation;
 
 /**
@@ -180,10 +179,6 @@ public class SendLocationService extends Service {
             return;
         }
 
-
-
-
-//        if (location.getProvider().equals(LocationManager.GPS_PROVIDER)) {
             Log.d("TAG", "gpsURL + lat=" + location.getLatitude()+"&lon="+location.getLongitude() +"&sp="+location.getSpeed());
 
             double roundLatitude = new BigDecimal(location.getLatitude()).setScale(7, RoundingMode.UP).doubleValue();
@@ -191,20 +186,6 @@ public class SendLocationService extends Service {
             float roundSpeed = new BigDecimal(location.getSpeed()).setScale(2, RoundingMode.UP).floatValue();
             infoLocation = new InfoLocation(roundLatitude, roundLongitude, roundSpeed);
 
-            Intent intent = new Intent(TabActivityMain.BROADCAST_ACTION);
-            intent.putExtra(TabActivityMain.ZERO, "0");
-            intent.putExtra(TabActivityMain.LATITUDE, infoLocation.getLatitude());
-            intent.putExtra(TabActivityMain.LONGITUDE, infoLocation.getLongitude());
-            intent.putExtra(TabActivityMain.SPEED, infoLocation.getSpeed());
-            intent.putExtra("source", source);
-            sendBroadcast(intent);
-
-//            Intent intent1 = new Intent(MapActivity.BROADCAST_ACTION);
-//            intent1.putExtra(TabActivityMain.ZERO, "0");
-//            intent1.putExtra(TabActivityMain.LATITUDE, infoLocation.getLatitude());
-//            intent1.putExtra(TabActivityMain.LONGITUDE, infoLocation.getLongitude());
-//            intent1.putExtra(TabActivityMain.SPEED, infoLocation.getSpeed());
-//            sendBroadcast(intent1);
             mt = new MyTask();
             mt.setInfo(infoLocation);
             Thread th = new Thread(new Runnable() {
@@ -214,36 +195,7 @@ public class SendLocationService extends Service {
                 }
             });
             th.start();
-//        } else if (location.getProvider().equals(LocationManager.NETWORK_PROVIDER)) {
-//            Log.d("TAG", "networkURL + lat=" + location.getLatitude()+"&lon="+location.getLongitude() +"&sp="+location.getSpeed());
-//            double roundLatitude = new BigDecimal(location.getLatitude()).setScale(7, RoundingMode.UP).doubleValue();
-//            double roundLongitude = new BigDecimal(location.getLongitude()).setScale(7, RoundingMode.UP).doubleValue();
-//            float roundSpeed = new BigDecimal(location.getSpeed()).setScale(5, RoundingMode.UP).floatValue();
-//            infoLocation = new InfoLocation(roundLatitude, roundLongitude, roundSpeed);
-//
-//            Intent intent = new Intent(TabActivityMain.BROADCAST_ACTION);
-//            intent.putExtra(TabActivityMain.ZERO, "0");
-//            intent.putExtra(TabActivityMain.LATITUDE, infoLocation.getLatitude());
-//            intent.putExtra(TabActivityMain.LONGITUDE, infoLocation.getLongitude());
-//            intent.putExtra(TabActivityMain.SPEED, infoLocation.getSpeed());
-//            sendBroadcast(intent);
-//
-//            Intent intent1 = new Intent(MapActivity.BROADCAST_ACTION);
-//            intent1.putExtra(TabActivityMain.ZERO, "0");
-//            intent1.putExtra(TabActivityMain.LATITUDE, infoLocation.getLatitude());
-//            intent1.putExtra(TabActivityMain.LONGITUDE, infoLocation.getLongitude());
-//            intent1.putExtra(TabActivityMain.SPEED, infoLocation.getSpeed());
-//            sendBroadcast(intent1);
-//            mt = new MyTask();
-//            mt.setInfo(infoLocation);
-//            Thread th = new Thread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    mt.run();
-//                }
-//            });
-//            th.start();
-//        }
+
 
     }
 

@@ -4,7 +4,7 @@
     <string name="map_type_satellite">Satellite</string>
     <string name="map_type_terrian">Terrian</string>
     <string name="map_type_normal">Normal</string>
-    <string name="friends">Friends</string>
+    <string name="contacts">Friends</string>
     <string name="messages">Messages</string>
 
     <string name="search_hint">Search</string>

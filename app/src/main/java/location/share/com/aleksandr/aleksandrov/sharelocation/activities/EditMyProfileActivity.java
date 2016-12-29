@@ -44,10 +44,10 @@ public class EditMyProfileActivity extends BaseActivity {
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
     static final int REQUEST_TAKE_PHOTO = 2;
-    ImageView imageView;
-    EditText user_fio, user_phone, user_email;
-    String mCurrentPhotoPath;
-    SharedPreferences sharedPreferences;
+    private ImageView imageView;
+    private EditText user_fio, user_phone, user_email;
+    private String mCurrentPhotoPath;
+    private SharedPreferences sharedPreferences;
 
 
 

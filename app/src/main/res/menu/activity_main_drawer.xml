@@ -20,17 +20,9 @@
             android:icon="@drawable/ic_satellite_black_24dp"
             android:title="@string/map_type_hybrid"/>
         <item
-            android:id="@+id/nav_satellite"
-            android:icon="@drawable/ic_satellite_black_24dp"
-            android:title="@string/map_type_satellite"/>
-        <item
             android:id="@+id/nav_terrian"
             android:icon="@drawable/ic_terrian_black_24dp"
             android:title="@string/map_type_terrian"/>
-        <item
-            android:id="@+id/nav_normal"
-            android:icon="@drawable/ic_normal_black_24dp"
-            android:title="@string/map_type_normal"/>
     </group>
 
     <item android:title="Communicate">
@@ -38,7 +30,7 @@
             <item
                 android:id="@+id/nav_friends"
                 android:icon="@drawable/ic_menu_share"
-                android:title="@string/friends"/>
+                android:title="@string/contacts"/>
             <item
                 android:id="@+id/nav_messages"
                 android:icon="@drawable/ic_menu_send"

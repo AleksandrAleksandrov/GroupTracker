@@ -17,9 +17,13 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
 
 import location.share.com.aleksandr.aleksandrov.sharelocation.Res;
 import location.share.com.aleksandr.aleksandrov.sharelocation.classes.MyProfileInfo;
+import location.share.com.aleksandr.aleksandrov.sharelocation.classes.Person;
+import location.share.com.aleksandr.aleksandrov.sharelocation.classes.UserInfo;
 
 /**
  * Created by Aleksandr on 12/2/2016.
@@ -32,11 +36,52 @@ public class Communication  {
         sharedPreferences = context.getSharedPreferences(Res.PREFERENCE_KEY, Context.MODE_PRIVATE);
     }
 
+    public List<UserInfo> getUserInfoByPhone(List<Person> personList) {
+        List<UserInfo> userInfoList = new ArrayList<>();
+
+        for (Person person : personList) {
+
+                for (int i = 0; i < person.getNumber().size(); i++) {
+                    try {
+                        URL url = new URL(Res.PROTOCOL_SCHEME
+                                + Res.GET_USER_INFO_BY_PHONE
+                                + Res.TOKEN + "=" + sharedPreferences.getString(Res.SHARED_PREFERENCES_E_TOKEN, "") + "&"
+                                + Res.PHONE + "=" + person.getNumber().get(i));
+
+                        HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+
+                        if (urlConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                            String line;
+                            InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+                            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(in));
+                            StringBuffer result = new StringBuffer();
+                            while ((line = bufferedReader.readLine()) != null) {
+                                result.append(line);
+                            }
+                            JSONObject obj = new JSONObject(result.toString());
+                            UserInfo userInfo = new UserInfo();
+                            userInfo.setId(obj.getInt(Res.ID));
+                            userInfo.setName(obj.getString(Res.USERNAME));
+                            userInfo.setFio(person.getName());
+                            userInfoList.add(userInfo);
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+
+        }
+        return userInfoList;
+    }
+
     public MyProfileInfo getMyInfo() {
         Editor editor = sharedPreferences.edit();
         MyProfileInfo myProfileInfo = null;
         try {
-            URL url = new URL(Res.PROTOCOL_SCHEME+ ":"
+            URL url = new URL(Res.PROTOCOL_SCHEME
                     + Res.GET_MY_INFO
                     + Res.TOKEN + "=" + sharedPreferences.getString(Res.SHARED_PREFERENCES_E_TOKEN, "") + "&"
                     + Res.USER_NAME + "=" + sharedPreferences.getString(Res.SHARED_PREFERENCES_NICK_NAME, ""));
@@ -75,7 +120,7 @@ public class Communication  {
         Editor editor = sharedPreferences.edit();
         MyProfileInfo myProfileInfo = new MyProfileInfo();
         try {
-            URL url = new URL(URLEncoder.encode(Res.PROTOCOL_SCHEME, "UTF-8") + ":"
+            URL url = new URL(Res.PROTOCOL_SCHEME
                     + Res.SET_MY_INFO
                     + Res.TOKEN + "=" + sharedPreferences.getString(Res.SHARED_PREFERENCES_E_TOKEN, "") + "&"
                     + Res.FIO + "=" + URLEncoder.encode(fio, "UTF-8") + "&"

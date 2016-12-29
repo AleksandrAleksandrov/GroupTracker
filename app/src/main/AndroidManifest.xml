@@ -11,6 +11,8 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <!--
         Beginning with Android 4.4, the permission is no longer required because the directory is not accessible by other apps,
         so you can declare the permission should be requested only on the lower versions of Android by adding the maxSdkVersion attribute
@@ -72,8 +74,6 @@
         <!--
             Activities
         -->
-
-        <activity android:name=".activities.TabActivityMain"/>-->
 
         <activity android:name=".authorization.AuthorizationActivity"
                   android:theme="@style/AppTheme.NoActionBar"/>
