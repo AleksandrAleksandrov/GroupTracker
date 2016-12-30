@@ -41,7 +41,7 @@ public class Person {
         return number;
     }
 
-    public void setNumber(ArrayList<String> number) {
+    public void setNumber(List<String> number) {
         this.number = number;
 //        for (int i = 0; i < number.length; i++) {
 //            this.number.add(number[i]);

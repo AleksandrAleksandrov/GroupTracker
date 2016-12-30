@@ -1,5 +1,6 @@
 package location.share.com.aleksandr.aleksandrov.sharelocation.activities;
 
+import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -46,7 +47,6 @@ public class FriendsActivity extends BaseActivity {
     private MyListAdapter myListAdapter;
 
     private DBHelper dbHelper;
-    private long[] mass = {380919355418L, 380989801011L, 380507156070L};
     private List<Person> person;
 
     @Override
@@ -60,60 +60,6 @@ public class FriendsActivity extends BaseActivity {
         dbHelper = new DBHelper(this, Res.DATA_BASE_SHARE_LOCATION, null, Res.DATA_BASE_VERSION);
     }
 
-    public List<Person> getContactList(){
-        ArrayList<Person> contactList = new ArrayList<Person>();
-
-        Uri contactUri = ContactsContract.Contacts.CONTENT_URI;
-        String[] PROJECTION = new String[] {
-                ContactsContract.Contacts._ID,
-                ContactsContract.Contacts.DISPLAY_NAME,
-                ContactsContract.Contacts.HAS_PHONE_NUMBER,
-        };
-        String SELECTION = ContactsContract.Contacts.HAS_PHONE_NUMBER + "='1'";
-        Cursor contacts = getContentResolver().query(ContactsContract.Contacts.CONTENT_URI, PROJECTION, SELECTION, null, null);
-
-
-        if (contacts.getCount() > 0) {
-            while(contacts.moveToNext()) {
-                Person aContact = new Person();
-                int idFieldColumnIndex = 0;
-                int nameFieldColumnIndex = 0;
-                int numberFieldColumnIndex = 0;
-
-                String contactId = contacts.getString(contacts.getColumnIndex(ContactsContract.Contacts._ID));
-
-                nameFieldColumnIndex = contacts.getColumnIndex(ContactsContract.PhoneLookup.DISPLAY_NAME);
-                if (nameFieldColumnIndex > -1)
-                {
-                    aContact.setName(contacts.getString(nameFieldColumnIndex));
-                }
-
-                PROJECTION = new String[] {ContactsContract.CommonDataKinds.Phone.NUMBER};
-                final Cursor phone = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, PROJECTION, ContactsContract.Data.CONTACT_ID + "=?", new String[]{String.valueOf(contactId)}, null);
-                if(phone.moveToFirst()) {
-                    while(!phone.isAfterLast())
-                    {
-                        numberFieldColumnIndex = phone.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
-                        if (numberFieldColumnIndex > -1) {
-//                            aContact.setNumber(phone.getString(numberFieldColumnIndex));
-                            phone.moveToNext();
-                            TelephonyManager mTelephonyMgr;
-                            mTelephonyMgr = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-//                            if (!mTelephonyMgr.getLine1Number().contains(aContact.getNumber())) {
-                                contactList.add(aContact);
-//                            }
-                        }
-                    }
-                }
-                phone.close();
-            }
-
-            contacts.close();
-        }
-
-        return contactList;
-    }
-
     private static final String CONTACT_ID = ContactsContract.Contacts._ID;
     private static final String DISPLAY_NAME = ContactsContract.Contacts.DISPLAY_NAME;
     private static final String HAS_PHONE_NUMBER = ContactsContract.Contacts.HAS_PHONE_NUMBER;
@@ -121,7 +67,7 @@ public class FriendsActivity extends BaseActivity {
     private static final String PHONE_NUMBER = ContactsContract.CommonDataKinds.Phone.NUMBER;
     private static final String PHONE_CONTACT_ID = ContactsContract.CommonDataKinds.Phone.CONTACT_ID;
 
-    public static ArrayList<Person> getAll(Context context) {
+    public static List<Person> getAll(Context context) {
         ContentResolver cr = context.getContentResolver();
 
         Cursor pCur = cr.query(
@@ -151,14 +97,15 @@ public class FriendsActivity extends BaseActivity {
                         DISPLAY_NAME + " ASC");
                 if (cur != null) {
                     if (cur.getCount() > 0) {
-                        ArrayList<Person> contacts = new ArrayList<>();
+                        List<Person> contacts = new ArrayList<>();
                         while (cur.moveToNext()) {
                             int id = cur.getInt(cur.getColumnIndex(CONTACT_ID));
                             if(phones.containsKey(id)) {
                                 Person con = new Person();
                                 con.setId(id);
                                 con.setName(cur.getString(cur.getColumnIndex(DISPLAY_NAME)));
-                                con.setNumber(phones.get(id));
+//                                validatePhoneNumber(phones.get(id));
+                                con.setNumber(validatePhoneNumber(phones.get(id)));
                                 contacts.add(con);
                             }
                         }
@@ -170,6 +117,51 @@ public class FriendsActivity extends BaseActivity {
             pCur.close();
         }
         return null;
+    }
+
+    private static List<String> validatePhoneNumber(ArrayList<String> phoneNumber) {
+        int len = 12;
+        List<String> phones = new ArrayList<>();
+        for (String phone : phoneNumber)
+        if (phone.matches("[+\\s]\\d{3}[-\\ \\s]\\d{2}[-\\ \\s]\\d{3}[-\\ \\s]\\d{4}")) {
+
+            char[] c = new char[12];
+            phone = phone.replaceAll("[^\\d]", "");
+            phone.getChars(0, 12, c, 0);
+            StringBuffer stringBuffer = new StringBuffer(len);
+            for (char i : c) {
+                stringBuffer.append(i);
+            }
+            phones.add(stringBuffer.toString());
+        } else if (phone.matches("\\d{3}[-\\ \\s]\\d{2}[-\\ \\s]\\d{3}[-\\ \\s]\\d{4}")) {
+            char[] c = new char[12];
+            phone = phone.replaceAll("[^\\d]", "");
+            phone.getChars(0, 12, c, 0);
+            StringBuilder stringBuffer = new StringBuilder(len);
+            for (char i : c) {
+                stringBuffer.append(i);
+            }
+            phones.add(stringBuffer.toString());
+        } else if (phone.matches("\\d{12}")) {
+            char[] c = new char[12];
+            phone = phone.replaceAll("[^\\d]", "");
+            phone.getChars(0, 12, c, 0);
+            StringBuilder stringBuffer = new StringBuilder(len);
+            for (char i : c) {
+                stringBuffer.append(i);
+            }
+            phones.add(stringBuffer.toString());
+        } else if (phone.matches("[+\\s]\\d{12}")) {
+            char[] c = new char[12];
+            phone = phone.replaceAll("[^\\d]", "");
+            phone.getChars(0, 12, c, 0);
+            StringBuilder stringBuffer = new StringBuilder(len);
+            for (char i : c) {
+                stringBuffer.append(i);
+            }
+            phones.add(stringBuffer.toString());
+        }
+        return phones;
     }
 
     @Override
@@ -199,8 +191,10 @@ public class FriendsActivity extends BaseActivity {
         ListView listView = (ListView) findViewById(R.id.list_view_contacts);
         listView.setAdapter(myListAdapter);
     }
-
+    ProgressDialog progress;
     private void refreshContacts(final List<Person> person) {
+        progress = new ProgressDialog(FriendsActivity.this);
+        progress.show();
         Observable.create(new Observable.OnSubscribe<List<UserInfo>>() {
             @Override
             public void call(final Subscriber<? super List<UserInfo>> subscriber) {
@@ -215,6 +209,7 @@ public class FriendsActivity extends BaseActivity {
                 .subscribe(new Action1<List<UserInfo>>() {
                     @Override
                     public void call(final List<UserInfo> userInfoList) {
+                        progress.dismiss();
                         fillInList(userInfoList);
                     }
                 });
