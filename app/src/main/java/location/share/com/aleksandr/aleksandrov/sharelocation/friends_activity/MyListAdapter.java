@@ -1,4 +1,4 @@
-package location.share.com.aleksandr.aleksandrov.sharelocation.adapters;
+package location.share.com.aleksandr.aleksandrov.sharelocation.friends_activity;
 
 import android.content.Context;
 import android.view.LayoutInflater;

@@ -1,25 +1,18 @@
-package location.share.com.aleksandr.aleksandrov.sharelocation.activities;
+package location.share.com.aleksandr.aleksandrov.sharelocation.friends_activity;
 
 import android.app.ProgressDialog;
-import android.app.SearchManager;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SearchView;
-import android.support.v7.widget.Toolbar;
-import android.telephony.TelephonyManager;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,8 +20,8 @@ import java.util.List;
 
 import location.share.com.aleksandr.aleksandrov.sharelocation.R;
 import location.share.com.aleksandr.aleksandrov.sharelocation.Res;
-import location.share.com.aleksandr.aleksandrov.sharelocation.adapters.MyListAdapter;
-import location.share.com.aleksandr.aleksandrov.sharelocation.classes.MyProfileInfo;
+import location.share.com.aleksandr.aleksandrov.sharelocation.activities.BaseActivity;
+import location.share.com.aleksandr.aleksandrov.sharelocation.activities.Communication;
 import location.share.com.aleksandr.aleksandrov.sharelocation.classes.Person;
 import location.share.com.aleksandr.aleksandrov.sharelocation.classes.UserInfo;
 import location.share.com.aleksandr.aleksandrov.sharelocation.data_base.DBHelper;
@@ -49,6 +42,8 @@ public class FriendsActivity extends BaseActivity {
     private DBHelper dbHelper;
     private List<Person> person;
 
+    private String TAG = "FriendsActivity";
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +62,11 @@ public class FriendsActivity extends BaseActivity {
     private static final String PHONE_NUMBER = ContactsContract.CommonDataKinds.Phone.NUMBER;
     private static final String PHONE_CONTACT_ID = ContactsContract.CommonDataKinds.Phone.CONTACT_ID;
 
+    /**
+     * Get all contacts from contacts of the phone.
+     * @param context
+     * @return
+     */
     public static List<Person> getAll(Context context) {
         ContentResolver cr = context.getContentResolver();
 
@@ -190,6 +190,12 @@ public class FriendsActivity extends BaseActivity {
 
         ListView listView = (ListView) findViewById(R.id.list_view_contacts);
         listView.setAdapter(myListAdapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Log.d(TAG, myListAdapter.getItemId(i) + "");
+            }
+        });
     }
     ProgressDialog progress;
     private void refreshContacts(final List<Person> person) {
