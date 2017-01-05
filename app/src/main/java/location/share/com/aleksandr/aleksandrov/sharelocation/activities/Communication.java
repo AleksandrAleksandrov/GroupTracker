@@ -63,6 +63,7 @@ public class Communication  {
                             userInfo.setId(obj.getInt(Res.ID));
                             userInfo.setName(obj.getString(Res.USERNAME));
                             userInfo.setFio(person.getName());
+                            userInfo.setPhoneNumber(person.getNumber().get(i));
                             userInfoList.add(userInfo);
                         }
                     } catch (IOException e) {

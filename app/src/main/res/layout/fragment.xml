@@ -3,7 +3,7 @@
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             tools:context="location.share.com.aleksandr.aleksandrov.sharelocation.classes.FriendsList"
+             tools:context="location.share.com.aleksandr.aleksandrov.sharelocation.friends_activity.FriendsList"
              android:background="@color/common_signin_btn_dark_text_default">
 
     <android.support.v7.widget.RecyclerView

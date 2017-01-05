@@ -6,7 +6,6 @@ package location.share.com.aleksandr.aleksandrov.sharelocation;
 
 public class Res {
     public static final String DATA_BASE_SHARE_LOCATION = "share_location_data_base";
-    public static final String CONTACTS_DATA_BASE_TABLE = "contacts_table";
     public static final int DATA_BASE_VERSION = 1;
 
     public static final String PROTOCOL_SCHEME = "http:";

@@ -23,6 +23,7 @@ import android.widget.TextView;
 import location.share.com.aleksandr.aleksandrov.sharelocation.R;
 import location.share.com.aleksandr.aleksandrov.sharelocation.Res;
 import location.share.com.aleksandr.aleksandrov.sharelocation.authorization.AuthorizationActivity;
+import location.share.com.aleksandr.aleksandrov.sharelocation.friends_activity.FriendsActivity;
 import location.share.com.aleksandr.aleksandrov.sharelocation.services.SendLocationService;
 import location.share.com.aleksandr.aleksandrov.sharelocation.services.Service;
 

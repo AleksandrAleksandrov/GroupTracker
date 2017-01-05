@@ -11,18 +11,22 @@ import location.share.com.aleksandr.aleksandrov.sharelocation.Res;
  */
 
 public class DBHelper extends SQLiteOpenHelper {
-
+    public static final String CONTACTS_DATA_BASE_TABLE = "contacts_table";
+    public static final String ID = "id";
+    public static final String USERNAME = "username";
+    public static final String FIO = "fio";
+    public static final String PHONE_NUMBER = "phone_number";
     public DBHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, null, version);
     }
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL("create table " + Res.CONTACTS_DATA_BASE_TABLE + " ("
-        + Res.ID + " integer primary key autoincrement,"
-        + Res.USERNAME + " text,"
-        + Res.FIO + " text,"
-        + Res.PHONE_NUMBER + " long"
+        sqLiteDatabase.execSQL("create table " + CONTACTS_DATA_BASE_TABLE + " ("
+        + ID + " integer,"
+        + USERNAME + " text,"
+        + FIO + " text,"
+        + PHONE_NUMBER + " long"
         + ");");
 
     }

@@ -8,12 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-import java.util.ArrayList;
-
 import location.share.com.aleksandr.aleksandrov.sharelocation.R;
 import location.share.com.aleksandr.aleksandrov.sharelocation.activities.ChatsActivity;
 import location.share.com.aleksandr.aleksandrov.sharelocation.adapters.MessageListAdapter;
-import location.share.com.aleksandr.aleksandrov.sharelocation.adapters.MyListAdapter;
 
 /**
  * Created by Aleksandr on 11/9/2016.

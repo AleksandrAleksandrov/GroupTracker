@@ -18,7 +18,6 @@ import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Interpolator;
@@ -57,27 +56,29 @@ import location.share.com.aleksandr.aleksandrov.sharelocation.Res;
 import location.share.com.aleksandr.aleksandrov.sharelocation.authorization.AuthorizationActivity;
 import location.share.com.aleksandr.aleksandrov.sharelocation.classes.UserInfo;
 import location.share.com.aleksandr.aleksandrov.sharelocation.classes.UsersLocation;
+import location.share.com.aleksandr.aleksandrov.sharelocation.friends_activity.FriendsActivity;
 import location.share.com.aleksandr.aleksandrov.sharelocation.services.GetLocationFromTheServerService;
 import location.share.com.aleksandr.aleksandrov.sharelocation.services.SendLocationService;
 
 public class MapActivity extends BaseActivity implements OnMapReadyCallback, NavigationView.OnNavigationItemSelectedListener {
 
     private GoogleMap mMap;
-    MyTask myTask;
-    HashMap<Integer, UserInfo> userInfoHashMap = new HashMap<>();
+    private MyTask myTask;
+    private HashMap<Integer, UserInfo> userInfoHashMap = new HashMap<>();
 
 //    private TextView person_name_on_navigation_view;
 //    private LinearLayout navigation_drawer_header_container;
 //    private SwitchCompat nav_share_location_switch;
 
 
-    BroadcastReceiver broadcastReceiverForGroupLocation;
-    IntentFilter intentFilterForGroupLocation;
+    private BroadcastReceiver broadcastReceiverForGroupLocation;
+    private IntentFilter intentFilterForGroupLocation;
     public final static String BROADCAST_ACTION_FOR_GET_GROUP_LOCATION = "get_group_location";
 
-    SharedPreferences sharedPreferences;
+    private SharedPreferences sharedPreferences;
 
     private String LOG_TAG = "MyLogTag";
+    private String TAG = "MapActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,10 +101,6 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback, Nav
     }
 
     private void makeTheMap() {
-
-
-
-
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         final SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map_fragment);
         mapFragment.getMapAsync(this);
@@ -445,5 +442,21 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback, Nav
                 bmImage.setImageBitmap(result);
             }
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        Log.d(TAG, "onPostResume");
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
     }
 }

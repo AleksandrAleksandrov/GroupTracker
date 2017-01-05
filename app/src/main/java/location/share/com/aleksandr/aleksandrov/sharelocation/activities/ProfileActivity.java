@@ -18,7 +18,14 @@ import location.share.com.aleksandr.aleksandrov.sharelocation.R;
 
 public class ProfileActivity extends BaseActivity {
 
-    TextView textView;
+    private TextView textView;
+    private static String EXTRA_PROFILE_ACTIVITY = "location.share.com.aleksandr.aleksandrov.sharelocation.activities.profiel_activity";
+
+    public static Intent newIntent(Context context, String userName) {
+        Intent intent = new Intent(context, ProfileActivity.class);
+        intent.putExtra(EXTRA_PROFILE_ACTIVITY, userName);
+        return intent;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -28,9 +35,7 @@ public class ProfileActivity extends BaseActivity {
 
         textView = (TextView) findViewById(R.id.profile_name);
 
-        textView.setText(intent.getStringExtra("users_name"));
-//        Log.d("myProfile", "users_name");
-
+        textView.setText(intent.getStringExtra(EXTRA_PROFILE_ACTIVITY));
     }
 
     public void onClickSendAMessageFromProfile(View view) {

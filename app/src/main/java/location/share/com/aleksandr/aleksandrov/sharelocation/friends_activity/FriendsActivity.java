@@ -2,9 +2,13 @@ package location.share.com.aleksandr.aleksandrov.sharelocation.friends_activity;
 
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -22,6 +26,7 @@ import location.share.com.aleksandr.aleksandrov.sharelocation.R;
 import location.share.com.aleksandr.aleksandrov.sharelocation.Res;
 import location.share.com.aleksandr.aleksandrov.sharelocation.activities.BaseActivity;
 import location.share.com.aleksandr.aleksandrov.sharelocation.activities.Communication;
+import location.share.com.aleksandr.aleksandrov.sharelocation.activities.ProfileActivity;
 import location.share.com.aleksandr.aleksandrov.sharelocation.classes.Person;
 import location.share.com.aleksandr.aleksandrov.sharelocation.classes.UserInfo;
 import location.share.com.aleksandr.aleksandrov.sharelocation.data_base.DBHelper;
@@ -41,18 +46,65 @@ public class FriendsActivity extends BaseActivity {
 
     private DBHelper dbHelper;
     private List<Person> person;
+    private List<UserInfo> mUserInofList = null;
 
     private String TAG = "FriendsActivity";
+    private final String SAVE_SCREEN_STATE_PHONES = "save_screen_state_phones";
+    private final String SAVE_SCREEN_STATE_CONTACTS_LIST = "save_screen_state_contacts_list";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.friends_list);
 
-        person = getAll(this);
+        if (savedInstanceState != null) {
+            mUserInofList = savedInstanceState.getParcelableArrayList(SAVE_SCREEN_STATE_CONTACTS_LIST);
+            if(mUserInofList != null) {
+                fillInList(mUserInofList);
+            } else {
+                person = savedInstanceState.getParcelableArrayList(SAVE_SCREEN_STATE_PHONES);
+            }
+        } else {
+            mUserInofList = new ArrayList<>();
+            dbHelper = new DBHelper(this, Res.DATA_BASE_SHARE_LOCATION, null, Res.DATA_BASE_VERSION);
+            SQLiteDatabase db = dbHelper.getReadableDatabase();
+            Cursor cursor = db.query(DBHelper.CONTACTS_DATA_BASE_TABLE, null, null, null, null, null, null);
+            if (cursor.moveToFirst()) {
+                // определяем номера столбцов по имени в выборке
+                int idColIndex = cursor.getColumnIndex(DBHelper.ID);
+                int usernameColIndex = cursor.getColumnIndex(DBHelper.USERNAME);
+                int fioColIndex = cursor.getColumnIndex(DBHelper.FIO);
+                int phoneColIndex = cursor.getColumnIndex(DBHelper.PHONE_NUMBER);
+                do {
+                    mUserInofList.add(new UserInfo(cursor.getInt(idColIndex),
+                            cursor.getString(usernameColIndex),
+                            cursor.getString(fioColIndex),
+                            cursor.getString(phoneColIndex)));
+                } while (cursor.moveToNext());
+                cursor.close();
+                db.close();
+//                dbHelper.close();
+                fillInList(mUserInofList);
+            } else {
+                Observable.create(new Observable.OnSubscribe<List<Person>>() {
+                    @Override
+                    public void call(final Subscriber<? super List<Person>> subscriber) {
+                        person = getAll(FriendsActivity.this);
 
-
-        dbHelper = new DBHelper(this, Res.DATA_BASE_SHARE_LOCATION, null, Res.DATA_BASE_VERSION);
+                        subscriber.onNext(person);
+                        subscriber.onCompleted();
+                    }
+                })
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Action1<List<Person>>() {
+                            @Override
+                            public void call(final List<Person> userInfoList) {
+                                refreshContacts(person);
+                            }
+                        });
+            }
+        }
     }
 
     private static final String CONTACT_ID = ContactsContract.Contacts._ID;
@@ -104,7 +156,6 @@ public class FriendsActivity extends BaseActivity {
                                 Person con = new Person();
                                 con.setId(id);
                                 con.setName(cur.getString(cur.getColumnIndex(DISPLAY_NAME)));
-//                                validatePhoneNumber(phones.get(id));
                                 con.setNumber(validatePhoneNumber(phones.get(id)));
                                 contacts.add(con);
                             }
@@ -178,13 +229,18 @@ public class FriendsActivity extends BaseActivity {
         int id = item.getItemId();
 
         if(id == R.id.menu_item_refresh) {
-            refreshContacts(person);
+            if (person != null) {
+                refreshContacts(person);
+            } else if (person == null) {
+                person = getAll(FriendsActivity.this);
+                refreshContacts(person);
+            }
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    private void fillInList(List<UserInfo> userInfoList) {
+    private void fillInList(final List<UserInfo> userInfoList) {
 
         myListAdapter = new MyListAdapter(this, userInfoList);
 
@@ -193,11 +249,11 @@ public class FriendsActivity extends BaseActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Log.d(TAG, myListAdapter.getItemId(i) + "");
+                startActivity(ProfileActivity.newIntent(FriendsActivity.this, userInfoList.get(i).getFio()));
             }
         });
     }
-    ProgressDialog progress;
+    private ProgressDialog progress;
     private void refreshContacts(final List<Person> person) {
         progress = new ProgressDialog(FriendsActivity.this);
         progress.show();
@@ -215,9 +271,27 @@ public class FriendsActivity extends BaseActivity {
                 .subscribe(new Action1<List<UserInfo>>() {
                     @Override
                     public void call(final List<UserInfo> userInfoList) {
+                        ContentValues contentValues = new ContentValues();
+                        SQLiteDatabase db = dbHelper.getWritableDatabase();
+                        db.delete(DBHelper.CONTACTS_DATA_BASE_TABLE, null, null);
+                        for (UserInfo userInfo : userInfoList) {
+                            contentValues.put(DBHelper.ID, userInfo.getId());
+                            contentValues.put(DBHelper.USERNAME, userInfo.getName());
+                            contentValues.put(DBHelper.FIO, userInfo.getFio());
+                            contentValues.put(DBHelper.PHONE_NUMBER, userInfo.getPhoneNumber());
+                            db.insert(DBHelper.CONTACTS_DATA_BASE_TABLE, null, contentValues);
+                        }
+                        db.close();
                         progress.dismiss();
                         fillInList(userInfoList);
                     }
                 });
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList(SAVE_SCREEN_STATE_PHONES, (ArrayList<? extends Parcelable>) person);
+        outState.putParcelableArrayList(SAVE_SCREEN_STATE_CONTACTS_LIST, (ArrayList<? extends Parcelable>) mUserInofList);
     }
 }

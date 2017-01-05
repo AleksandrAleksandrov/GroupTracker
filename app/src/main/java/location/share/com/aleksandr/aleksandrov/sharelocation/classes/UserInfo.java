@@ -1,5 +1,8 @@
 package location.share.com.aleksandr.aleksandrov.sharelocation.classes;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -11,91 +14,141 @@ import location.share.com.aleksandr.aleksandrov.sharelocation.R;
  * Created by Aleksandr on 10/27/2016.
  */
 
-public class UserInfo {
-    private int id;
-    private String name = null;
-    private String fio;
-    private LatLng latLng;
-    private double latitude;
-    private double longitude;
-    private double speed;
-    private Marker marker;
-    private MarkerOptions markerOptions;
+public class UserInfo implements Parcelable {
+    private int mId;
+    private String mName = null;
+    private String mFio;
+    private String mPhoneNumber;
+
+    private LatLng mLatLng;
+    private double mLatitude;
+    private double mLongitude;
+    private double mSpeed;
+    private Marker mMarker;
+    private MarkerOptions mMarkerOptions;
 
     public UserInfo() {
 
     }
 
+    public UserInfo(int id, String name, String fio, String phoneNumber) {
+        mId = id;
+        mName = name;
+        mFio = fio;
+        mPhoneNumber = phoneNumber;
+    }
+
     public String getFio() {
-        return fio;
+        return mFio;
+    }
+
+    public String getPhoneNumber() {
+        return mPhoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        mPhoneNumber = phoneNumber;
     }
 
     public void setFio(String fio) {
-        this.fio = fio;
+        this.mFio = fio;
     }
 
     public int getId() {
-        return id;
+        return mId;
     }
 
     public String getName() {
-        return name;
+        return mName;
     }
 
     public LatLng getLatLng() {
-        return latLng;
+        return mLatLng;
     }
 
     public double getLatitude() {
-        return latitude;
+        return mLatitude;
     }
 
     public double getLongitude() {
-        return longitude;
+        return mLongitude;
     }
 
     public double getSpeed() {
-        return speed;
+        return mSpeed;
     }
 
     public Marker getMarker() {
-        marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.gt_2_42px));
-        return marker;
+        mMarker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.gt_2_42px));
+        return mMarker;
     }
 
     public MarkerOptions getMarkerOptions() {
-        return markerOptions;
+        return mMarkerOptions;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.mId = id;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.mName = name;
     }
 
     public void setLatLng(LatLng latLng) {
-        this.latLng = latLng;
+        this.mLatLng = latLng;
     }
 
     public void setLatitude(double latitude) {
-        this.latitude = latitude;
+        this.mLatitude = latitude;
     }
 
     public void setLongitude(double longitude) {
-        this.longitude = longitude;
+        this.mLongitude = longitude;
     }
 
     public void setSpeed(double speed) {
-        this.speed = speed;
+        this.mSpeed = speed;
     }
 
     public void setMarker(Marker marker) {
-        this.marker = marker;
+        this.mMarker = marker;
     }
 
     public void setMarkerOptions(MarkerOptions markerOptions) {
-        this.markerOptions = markerOptions;
+        this.mMarkerOptions = markerOptions;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(mId);
+        parcel.writeString(mName);
+        parcel.writeString(mFio);
+        parcel.writeString(mPhoneNumber);
+    }
+
+    public static final Parcelable.Creator<UserInfo> CREATOR = new Parcelable.Creator<UserInfo>() {
+
+        @Override
+        public UserInfo createFromParcel(Parcel parcel) {
+            return new UserInfo(parcel);
+        }
+
+        @Override
+        public UserInfo[] newArray(int i) {
+            return new UserInfo[0];
+        }
+    };
+
+    private UserInfo(Parcel parcel) {
+        mId = parcel.readInt();
+        mName = parcel.readString();
+        mFio = parcel.readString();
+        mPhoneNumber = parcel.readString();
     }
 }
