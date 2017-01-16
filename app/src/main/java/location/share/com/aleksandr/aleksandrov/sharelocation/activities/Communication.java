@@ -58,13 +58,18 @@ public class Communication  {
                             while ((line = bufferedReader.readLine()) != null) {
                                 result.append(line);
                             }
-                            JSONObject obj = new JSONObject(result.toString());
-                            UserInfo userInfo = new UserInfo();
-                            userInfo.setId(obj.getInt(Res.ID));
-                            userInfo.setName(obj.getString(Res.USERNAME));
-                            userInfo.setFio(person.getName());
-                            userInfo.setPhoneNumber(person.getNumber().get(i));
-                            userInfoList.add(userInfo);
+                            if (result.toString().equals(0)) {
+
+                            } else {
+                                JSONObject obj = new JSONObject(result.toString());
+                                UserInfo userInfo = new UserInfo();
+                                userInfo.setId(obj.getInt(Res.ID));
+                                userInfo.setName(obj.getString(Res.USERNAME));
+                                userInfo.setFio(person.getName());
+                                userInfo.setPhoneNumber(person.getNumber().get(i));
+                                userInfoList.add(userInfo);
+                            }
+
                         }
                     } catch (IOException e) {
                         e.printStackTrace();

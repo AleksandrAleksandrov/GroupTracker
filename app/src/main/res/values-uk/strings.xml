@@ -40,4 +40,7 @@
     <string name="done">Зроблено</string>
     <string name="full_name">Повне ім\'я</string>
     <string name="refresh_contacts">Оновити список контактів</string>
+    <string name="authorization">Авторизація</string>
+    <string name="hint_confirm_password">Підтвердження пароля</string>
+    <string name="action_log_out">Вийти</string>
 </resources>

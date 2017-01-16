@@ -13,9 +13,6 @@
     <string name="add_to_friends">Add to friends</string>
 
 
-
-
-    <string name="app_name">Group Tracker</string>
     <string name="title_activity_maps">Map</string>
     <!--<string name="title_activity_main">Share Location</string>-->
 
@@ -49,6 +46,7 @@
     <string name="full_name">Full name</string>
     <string name="authorization">Authorization</string>
     <string name="refresh_contacts">Refresh contacts list</string>
-    <string name="hint_confirm_password"></string>
+    <string name="hint_confirm_password">Confirm password</string>
+    <string name="action_log_out">Log out</string>
 
 </resources>

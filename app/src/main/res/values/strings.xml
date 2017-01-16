@@ -17,7 +17,7 @@
 
 
     <string name="done">Done</string>
-    <string name="app_name">Group Tracker</string>
+    <string name="app_name" translatable="false">Group Tracker</string>
     <string name="title_activity_maps">Map</string>
     <!--<string name="title_activity_main">Share Location</string>-->
 
@@ -35,7 +35,7 @@
     <string name="create_a_new_account">Create a new account</string>
     <string name="hint_nick_name">User Name</string>
     <string name="hint_password">Password</string>
-    <string name="hint_confirm_password">Confirm Password</string>
+    <string name="hint_confirm_password">Confirm password</string>
 
     <string name="speed">Speed</string>
     <string name="km_per_hour">km/h</string>

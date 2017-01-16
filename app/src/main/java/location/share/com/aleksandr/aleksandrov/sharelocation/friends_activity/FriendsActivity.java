@@ -1,9 +1,11 @@
 package location.share.com.aleksandr.aleksandrov.sharelocation.friends_activity;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -11,6 +13,8 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -42,6 +46,7 @@ import rx.schedulers.Schedulers;
 
 public class FriendsActivity extends BaseActivity {
 
+    private static final int MY_PERMISSIONS_REQUEST_READ_CONTACTS = 1;
     private MyListAdapter myListAdapter;
 
     private DBHelper dbHelper;
@@ -86,23 +91,32 @@ public class FriendsActivity extends BaseActivity {
 //                dbHelper.close();
                 fillInList(mUserInofList);
             } else {
-                Observable.create(new Observable.OnSubscribe<List<Person>>() {
-                    @Override
-                    public void call(final Subscriber<? super List<Person>> subscriber) {
-                        person = getAll(FriendsActivity.this);
 
-                        subscriber.onNext(person);
-                        subscriber.onCompleted();
+                // Here, thisActivity is the current activity
+                if (ContextCompat.checkSelfPermission(FriendsActivity.this, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
+
+                    // Should we show an explanation?
+                    if (ActivityCompat.shouldShowRequestPermissionRationale(FriendsActivity.this,
+                            Manifest.permission.READ_CONTACTS)) {
+
+                        // Show an explanation to the user *asynchronously* -- don't block
+                        // this thread waiting for the user's response! After the user
+                        // sees the explanation, try again to request the permission.
+
+                    } else {
+
+                        // No explanation needed, we can request the permission.
+
+                        ActivityCompat.requestPermissions(FriendsActivity.this,
+                                new String[]{Manifest.permission.READ_CONTACTS},
+                                MY_PERMISSIONS_REQUEST_READ_CONTACTS);
+
+                        // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                        // app-defined int constant. The callback method gets the
+                        // result of the request.
                     }
-                })
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new Action1<List<Person>>() {
-                            @Override
-                            public void call(final List<Person> userInfoList) {
-                                refreshContacts(person);
-                            }
-                        });
+                }
+
             }
         }
     }
@@ -119,7 +133,7 @@ public class FriendsActivity extends BaseActivity {
      * @param context
      * @return
      */
-    public static List<Person> getAll(Context context) {
+    public List<Person> getAll(Context context) {
         ContentResolver cr = context.getContentResolver();
 
         Cursor pCur = cr.query(
@@ -168,6 +182,49 @@ public class FriendsActivity extends BaseActivity {
             pCur.close();
         }
         return null;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_READ_CONTACTS: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    Observable.create(new Observable.OnSubscribe<List<Person>>() {
+                        @Override
+                        public void call(final Subscriber<? super List<Person>> subscriber) {
+
+                            person = getAll(FriendsActivity.this);
+
+                            subscriber.onNext(person);
+                            subscriber.onCompleted();
+
+                        }
+                    })
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new Action1<List<Person>>() {
+                                @Override
+                                public void call(final List<Person> userInfoList) {
+                                    refreshContacts(person);
+                                }
+                            });
+
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
+
+                } else {
+
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request
+        }
     }
 
     private static List<String> validatePhoneNumber(ArrayList<String> phoneNumber) {
@@ -232,9 +289,54 @@ public class FriendsActivity extends BaseActivity {
             if (person != null) {
                 refreshContacts(person);
             } else if (person == null) {
-                person = getAll(FriendsActivity.this);
-                refreshContacts(person);
-            }
+                // Here, thisActivity is the current activity
+                if (ContextCompat.checkSelfPermission(FriendsActivity.this, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
+
+                    // Should we show an explanation?
+                    if (ActivityCompat.shouldShowRequestPermissionRationale(FriendsActivity.this,
+                            Manifest.permission.READ_CONTACTS)) {
+
+                        // Show an explanation to the user *asynchronously* -- don't block
+                        // this thread waiting for the user's response! After the user
+                        // sees the explanation, try again to request the permission.
+
+                    } else {
+
+                        // No explanation needed, we can request the permission.
+
+                        ActivityCompat.requestPermissions(FriendsActivity.this,
+                                new String[]{Manifest.permission.READ_CONTACTS},
+                                MY_PERMISSIONS_REQUEST_READ_CONTACTS);
+
+                        // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                        // app-defined int constant. The callback method gets the
+                        // result of the request.
+
+                }
+//                person = getAll(FriendsActivity.this);
+//                refreshContacts(person);
+            } else {
+                    Observable.create(new Observable.OnSubscribe<List<Person>>() {
+                        @Override
+                        public void call(final Subscriber<? super List<Person>> subscriber) {
+
+                            person = getAll(FriendsActivity.this);
+
+                            subscriber.onNext(person);
+                            subscriber.onCompleted();
+
+                        }
+                    })
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new Action1<List<Person>>() {
+                                @Override
+                                public void call(final List<Person> userInfoList) {
+                                    refreshContacts(person);
+                                }
+                            });
+                }
+                }
         }
 
         return super.onOptionsItemSelected(item);
